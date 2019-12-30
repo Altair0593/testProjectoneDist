@@ -8,8 +8,8 @@ const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'postgres',
-    password: '0000',
+    database: 'testdb',
+    password: '7485184A',
     port: 5432,
 });
 
@@ -103,7 +103,7 @@ app.put("/", function (req, res) {
     queryComand = queryComand.substring(0, queryComand.length - 1);
     console.log(upgradeSQL, queryComand);
 
-    client.query(`UPDATE student SET ${queryComand}  WHERE user_id = ${userID.id}`,
+    client.query(`UPDATE student SET ${queryComand} WHERE user_id = ${userID.id}`,
         upgradeSQL,
         function (err, result) {
         if (err) {

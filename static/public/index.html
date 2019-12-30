@@ -5,63 +5,64 @@
     <title>Title</title>
     <link rel="shortcut icon" href="/folder-name/logo.ico">
     <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
 </head>
-<body>
+<div class="main-wrapper">
+    <h1 class="visual-hidden">Anonymous creators</h1>
+</div>
 <div class="wrapper">
-    <h1>Classlist</h1>
+    <h2>Class list</h2>
 
-    <div id = "resulttable" style="display: flex; flex-direction: column;
-    width: 500px;">
-        <div id = "resulttable1" style="display: flex; justify-content: space-around">
-            <div>Id</div>
-            <div>Name</div>
-            <div>Age</div>
-            <div>Lastname</div>
-            <div>City</div>
+    <div id = "resulttable" class="wrapper__item">
+        <div id = "resulttable1" class= "result-table">
+            <div class="result-table__item">Id</div>
+            <div class="result-table__item">Name</div>
+            <div class="result-table__item">Lastname</div>
+            <div class="result-table__item">Age</div>
+            <div class="result-table__item">City</div>
         </div>
     </div>
 
-</div>
-</div>
-
-    <br>
-    <div>
-        <div>
-            <input placeholder="Write your id" id="StudentId"/>
+    <div class="input-wrapper">
+        <div class="input-container">
+            <label for = "StudentId">Id</label>
+            <input class="input-item" placeholder="Write your id" id="StudentId"/>
         </div>
-        <br>
-        <div>
-            <input placeholder="Write your name" id="Name"/>
+        <div class="input-container">
+            <label for = "Name">Name</label>
+            <input class="input-item" placeholder="Write your name" id="Name"/>
         </div>
-        <br>
-        <div>
-            <input placeholder="Write your lastname" id="Lastname"/>
+        <div class="input-container">
+            <label for = "Lastname">Lastname</label>
+            <input class="input-item" placeholder="Write your lastname" id="Lastname"/>
         </div>
-
-        <br>
-        <div>
-            <input placeholder="Wraite your age" id ="Age"/>
+        <div class = "input-container">
+            <label for = "Age">Age</label>
+            <input class="input-item" placeholder="Wraite your age" id ="Age"/>
         </div>
-        <br>
-        <div>
-            <input placeholder="Write your city" id="City"/>
-        </div>
-
-        <br>
-    <div style="display: flex">
-
-        <div>
-            <input type="button" value="Create" id = "Create"/>
-        </div>
-        <div>
-            <input type="button" value="Update" id = "Update"/>
-        </div>
-        <div>
-            <input type="button" value="Delete by id" id = "Delete"/>
+        <div class = "input-container">
+            <label for = "City">City</label>
+            <input class="input-item" placeholder="Write your city" id="City"/>
         </div>
     </div>
 
-
+    <div class = "control">
+        <div class="control__item">
+            <input class="control__input control__input--create" type="button" value="Create" id = "Create"/>
+        </div>
+        <div class="control__item">
+            <input disabled class="control__input control__input--read" type="button" value="Read" id = "Read" />
+        </div>
+        <div class="control__item">
+            <input class="control__input control__input--update" type="button" value="Update" id = "Update"/>
+        </div>
+        <div class="control__item">
+            <input class="control__input control__input--delete" type="button" value="Delete by id" id = "Delete"/>
+        </div>
+    </div>
+</div>
+</div>
 <script src="../src/script.js"></script>
 </body>
 </html>

@@ -40,6 +40,9 @@ function createObj() {
 }
 
 function updateInfo(method) {
+    if (studentId.value === "") {
+        return;
+    }
 
     var data = createObj();
     if(method === "PUT"){
@@ -52,6 +55,9 @@ function updateInfo(method) {
 }
 
 function createStudent() {
+    if (studentId.value === "") {
+        return;
+    }
 
     updateInfo("POST");
     xhr.onload = function () {
@@ -66,6 +72,7 @@ function createStudent() {
 }
 
 function ready(){
+
     xhr.open("GET","/");
     xhr.send();
     xhr.onload = function () {
@@ -79,6 +86,10 @@ function ready(){
 }
 
 function deleteRow(){
+    if (studentId.value === "") {
+        return;
+    }
+
     var idstudent = studentId.value;
 
     xhr.open("DELETE",`/:${idstudent}`);
