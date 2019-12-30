@@ -1,0 +1,24 @@
+{
+  "name": "projectone",
+  "version": "1.0.0",
+  "description": "This is a CRUD app. It works with Nodejs server and Postgres database.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
+    "pg": "^7.17.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://LetsGetLift@bitbucket.org/deveducationprojectone/projectone.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/deveducationprojectone/projectone#readme"
+}
