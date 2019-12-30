@@ -3,7 +3,6 @@ var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
 
-//denis changes
 const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
@@ -127,5 +126,3 @@ app.delete("/:id", function (req, res) {
 app.listen(port, function () {
     console.log("port: " + port)
 });
-
-
