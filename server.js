@@ -2,8 +2,8 @@ var express = require("express");
 var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
-//goot dey
 //development
+//denis
 const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
@@ -12,8 +12,7 @@ const client = new Client({
     password: '7485184A',
     port: 5432,
 });
-// development
-// development
+
 client.connect(function(err) {
     if (err) throw err;
     console.log("Connected!");
