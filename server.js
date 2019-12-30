@@ -3,13 +3,13 @@ var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
 
-
+//denis changes
 const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'testdb',
-    password: '7485184A',
+    database: 'postgres', //1
+    password: 'postgres', //2
     port: 5432,
 });
 
