@@ -8,8 +8,8 @@ const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'testdb',
-    password: '7485184A',
+    database: 'postgres',
+    password: '0000',
     port: 5432,
 });
 
@@ -25,7 +25,7 @@ var port = 8080;
 
 app.get("/", function (req, res) {
 
-    client.query('SELECT * FROM student;', [], function (err, result) {
+    client.query('SELECT * FROM student ORDER BY user_id;', [], function (err, result) {
 
         if (err) {
             return next(err)
@@ -45,7 +45,7 @@ app.post("/", function (req, res) {
         city: req.body.city
     };
 
-    var newUser = `INSERT INTO student(user_id, firstname, lastname, age, city) VALUES (${user.id}, '${user.username}', '${user.lastname}', ${user.age}, '${user.city}')`;
+    var newUser = `INSERT INTO student(user_id, firstname, lastname, age, city) VALUES ('${user.id}', '${user.username}', '${user.lastname}', '${user.age}', '${user.city}')`;
     client.query(newUser,[],
         function (err, result) {
             if (err) {
@@ -64,16 +64,47 @@ app.post("/", function (req, res) {
 });
 
 app.put("/", function (req, res) {
+    var userID = {
+        id: req.body.id
+    };
+
+    var queryColomn = [
+        "firstname",
+        "lastname",
+        "age",
+        "city"
+    ];
+
+    var queryComand = "";
+
+    var valueCounter = 0;
+    var counterLink = 1;
+
     var user = {
-        id: req.body.id,
         username: req.body.username,
-        age: req.body.age,
         lastname: req.body.lastname,
+        age: req.body.age,
         city: req.body.city
     };
 
-    client.query(`UPDATE student SET firstname = $1, lastname = $2, age = $3, city = $4  WHERE user_id = ${user.id}`,
-        [`${user.username}`, `${user.lastname}`, `${user.age}`, `${user.city}`],
+    var upgradeSQL = [];
+
+    Object.keys(user).forEach(function (key) {
+        if (!(this[key].length === 0)) {
+            upgradeSQL.push(`${this[key]}`);
+            // if ()
+            queryComand += queryColomn[valueCounter] + "= $" + counterLink + ",";
+
+            counterLink++
+        };
+        valueCounter++;
+    }, user);
+
+    queryComand = queryComand.substring(0, queryComand.length - 1);
+    console.log(upgradeSQL, queryComand);
+
+    client.query(`UPDATE student SET ${queryComand}  WHERE user_id = ${userID.id}`,
+        upgradeSQL,
         function (err, result) {
         if (err) {
             throw err;
