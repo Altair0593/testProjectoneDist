@@ -49,7 +49,7 @@ app.post("/", function (req, res) {
     client.query(newUser,[],
         function (err, result) {
             if (err) {
-                throw err;
+                console.log(err);
             }
             console.log(result);
         });
