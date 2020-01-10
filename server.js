@@ -29,16 +29,31 @@ app.get("/registration", function (req, res) {
 });
 
 app.post("/registration", function (req, res) {
-    console.log(req.body)
+    //console.log(req.body)
     var user = {
         login: req.body.login,
         password: req.body.password,
         email: req.body.email,
         phone: req.body.phone
     };
-    console.log(user)
-    var newUser = `INSERT INTO teachers(login, password, email, phone_number) VALUES ('${user.login}', '${user.password}', '${user.email}', '${user.phone}')`;
-    client.query(newUser,[]);
+    //console.log(user)
+    client.query(`SELECT * FROM teachers WHERE login = '${user.login}';`, [], function (err, result) {
+       console.log(result.rows, `${user.login}`);
+       var baselogin;
+        for(var key in result.rows){
+            console.log(`${user.login}`)
+            baselogin = result.rows[key].login;
+            //res.json(JSON.stringify("exit"));
+        }
+        if (baselogin !== `${user.login}`) {
+            var newUser = `INSERT INTO teachers(login, password, email, phone_number) VALUES ('${user.login}', '${user.password}', '${user.email}', '${user.phone}')`;
+            client.query(newUser, []);
+        }
+
+
+    });
+
+
 
 
 });

@@ -14,12 +14,11 @@ function getValidation() {
     if (checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "+380")) {
        delete elementValue.password2;
         console.log("Регистрация успешна");
-console.log(elementValue);
-console.log(elementValue);
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/registration");
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(elementValue));
+
     }
 }
 function checklogin(login) {
