@@ -9,7 +9,7 @@ var result = document.getElementById("resulttable");
 var deleteById = document.getElementById("Delete");
 var updateButton = document.getElementById("Update");
 var xhr = new XMLHttpRequest();
-
+console.log()
 function renderTable(i, newStudentValue) {
 
     var divRow = "";
