@@ -21,7 +21,38 @@ client.connect(function(err) {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
-var port = 8080;
+var port = 3000;
+
+app.post("/", function (req, res) {
+
+    var user = {
+        id: req.body.id,
+        username: req.body.username,
+        age: req.body.age,
+        lastname: req.body.lastname,
+        city: req.body.city
+    };
+
+    var newUser = `INSERT INTO student(user_id, firstname, lastname, age, city) VALUES ('${user.id}', '${user.username}', '${user.lastname}', '${user.age}', '${user.city}')`;
+    client.query(newUser,[],
+        function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(result);
+        });
+    client.query(`SELECT * FROM student WHERE user_id = ${user.id};`, [], function (err, result) {
+
+        if (err) {
+            return next(err)
+        };
+        res.json(result.rows);
+    });
+
+});
+
+
+
 
 app.get("/", function (req, res) {
 
