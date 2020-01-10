@@ -8,8 +8,8 @@ const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'testdb', 
-    password: '7485184A',
+    database: 'postgres',
+    password: 'postgres',
     port: 5432,
 });
 
@@ -21,8 +21,27 @@ client.connect(function(err) {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
-var port = 8080;
+var port = 3000;
+app.get("/registration", function (req, res) {
 
+    res.sendFile(__dirname + "/static/public/registration.html");
+
+});
+
+app.post("/registration", function (req, res) {
+    console.log(req.body)
+    var user = {
+        login: req.body.login,
+        password: req.body.password,
+        email: req.body.email,
+        phone: req.body.phone
+    };
+    console.log(user)
+    var newUser = `INSERT INTO teachers(login, password, email, phone_number) VALUES ('${user.login}', '${user.password}', '${user.email}', '${user.phone}')`;
+    client.query(newUser,[]);
+
+
+});
 app.get("/", function (req, res) {
 
     client.query('SELECT * FROM student ORDER BY user_id;', [], function (err, result) {
