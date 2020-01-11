@@ -43,43 +43,45 @@ function updateInfo(method) {
     if (studentId.value === "") {
         return;
     }
-
     var data = createObj();
-    if(method === "PUT"){
-        xhr.open("PUT", "/");
-    } else {
-        xhr.open("POST", "/");
-    }
+
+    xhr.open("PUT", "/");
+
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
+    document.location.reload()
 }
 
 function createStudent() {
     if (studentId.value === "") {
         return;
     }
+    var data = createObj();
 
-    updateInfo("POST");
-    xhr.onload = function () {
+    xhr.open("POST", "/");
 
-        var newStudentValue =  JSON.parse(this.response);
-        renderTable(0, newStudentValue);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send(JSON.stringify(data));
 
-    };
     xhr.onerror = function(){
         alert("server error");
-    }
+    };
+    document.location.reload()
 }
 
 function ready(){
 
     xhr.open("GET","/");
     xhr.send();
-    xhr.onload = function () {
 
-        var newStudentValue =  JSON.parse(this.response);
-        for(let i = 0; i < newStudentValue.length; i++) {
-            renderTable(i, newStudentValue);
+    xhr.onload = function () {
+        if(xhr.status == 401){
+            alert("insert correct login or password")
+        }else{
+            var newStudentValue = JSON.parse(this.response);
+            for (let i = 0; i < newStudentValue.length; i++) {
+                renderTable(i, newStudentValue);
+            }
         }
     };
 
@@ -95,6 +97,7 @@ function deleteRow(){
     xhr.open("DELETE",`/:${idstudent}`);
 
     xhr.send();
+    document.location.reload()
 }
 function updateStudent() {
     updateInfo("PUT");
