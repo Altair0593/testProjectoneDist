@@ -40,13 +40,22 @@ pgAdmin 4 or higher is required.
   * Click on Tables and go to top menu => click on Tools => Query tool;
   * To create table => copy and put in Query editor this code:
   * ```sql 
-    CREATE TABLE student(
-   user_id integer PRIMARY KEY,
-   firstname VARCHAR (40), 
-   lastname VARCHAR (40),
-   age VARCHAR (40),
-   city VARCHAR (40)
+	CREATE TABLE students(
+	user_id integer PRIMARY KEY,
+	firstname VARCHAR (40),
+	lastname VARCHAR (40),
+	age VARCHAR (40),
+	city VARCHAR (40),
+	teacher_id integer,
+	FOREIGN KEY(teacher_id) REFERENCES teachers(user_id)
+);
   );
+	CREATE TABLE teachers(
+	user_id SERIAL PRIMARY KEY,
+	login VARCHAR (40),
+	password VARCHAR (40),
+	email VARCHAR (40),
+	phone_number VARCHAR (40));
   ```
   * Open file server.js and write in row 12 your password from postgres 4 admin;
   * Install dependencies:
