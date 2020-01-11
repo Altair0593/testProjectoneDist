@@ -57,7 +57,7 @@ pgAdmin 4 or higher is required.
   * Start the server:
 
   ```bash
-  $ npm node server
+  $ node server
   ```
   * View the website at: http://localhost:8080/public/index.html  
  

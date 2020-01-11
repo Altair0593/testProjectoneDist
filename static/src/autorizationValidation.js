@@ -12,10 +12,19 @@ function getElementValue() {
 function getValidation() {
     var elementValue = getElementValue();
     if (checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "+380")) {
-       delete elementValue.password2;
+        delete elementValue.password2;
         console.log("Регистрация успешна");
-console.log(elementValue);
-    }
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/registration");
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(elementValue));
+        xhr.onreadystatechange = function () {
+            if (xhr.status == 400) {
+                alert("user already exist");
+            }
+        }
+
+        }
 }
 function checklogin(login) {
     if (login.length < 1 || !isNaN(Number(login[0]))) {
