@@ -83,6 +83,8 @@ app.post("/registration", function (req, res) {
         if (baselogin !== `${user.login}`) {
             var newUser = `INSERT INTO teachers(login, password, email, phone_number) VALUES ('${user.login}', '${user.password}', '${user.email}', '${user.phone}')`;
             client.query(newUser, []);
+        } else {
+            res.status(400).send('Bad Request ');
         }
 
 
