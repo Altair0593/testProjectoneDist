@@ -2,13 +2,7 @@ var express = require("express");
 var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const config = require('./webpack.config.js');
-const compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-}));
+
 
 
 const {Client} = require('pg');
@@ -202,7 +196,13 @@ app.listen(port, function () {
 
 
 
-
+// const webpack = require('webpack');
+// const webpackDevMiddleware = require('webpack-dev-middleware');
+// const config = require('./webpack.config.js');
+// const compiler = webpack(config);
+// app.use(webpackDevMiddleware(compiler, {
+//     publicPath: config.output.publicPath,
+// }));
 
 
 //var idTeacher;
