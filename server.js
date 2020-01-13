@@ -3,7 +3,8 @@ var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
 
-console.log(1);
+console.log(1,1);
+
 const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
