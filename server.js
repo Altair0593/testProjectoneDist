@@ -2,8 +2,14 @@ var express = require("express");
 var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const config = require('./webpack.config.js');
+const compiler = webpack(config);
+app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+}));
 
-console.log(1,1);
 
 const {Client} = require('pg');
 const client = new Client({
