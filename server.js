@@ -3,8 +3,8 @@ var app = express();
 var path = require("path");
 var bodyParser = require("body-parser");
 
-console.log(1,1);
-console.log(sdfgsdfg);
+
+
 const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
@@ -196,7 +196,13 @@ app.listen(port, function () {
 
 
 
-
+// const webpack = require('webpack');
+// const webpackDevMiddleware = require('webpack-dev-middleware');
+// const config = require('./webpack.config.js');
+// const compiler = webpack(config);
+// app.use(webpackDevMiddleware(compiler, {
+//     publicPath: config.output.publicPath,
+// }));
 
 
 //var idTeacher;
