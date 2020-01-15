@@ -111,15 +111,15 @@ app.get("/", function (req, res) {
 app.post("/", function (req, res) {
 
     var user = {
-        id: req.body.id,
+
         username: req.body.username,
         age: req.body.age,
         lastname: req.body.lastname,
         city: req.body.city
     };
 
-    var newUser = `INSERT INTO students(user_id, firstname, lastname, age, city, teacher_id) VALUES 
-    ('${user.id}', '${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${teacherId}')`;
+    var newUser = `INSERT INTO students( firstname, lastname, age, city, teacher_id) VALUES 
+    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${teacherId}')`;
     client.query(newUser,[],
         function (err, result) {
             if (err) {
@@ -133,7 +133,7 @@ app.put("/", function (req, res) {
     var userID = {
         id: req.body.id
     };
-
+    console.log(req.body, userID.id)
     var queryColomn = [
         "firstname",
         "lastname",
@@ -173,7 +173,7 @@ app.put("/", function (req, res) {
         upgradeSQL,
         function (err, result) {
             if (err) {
-                throw err;
+                console.log( err);
             }
             console.log(result);
         });
@@ -184,7 +184,7 @@ app.delete("/:id", function (req, res) {
     var id = (req.params.id).slice(1);
     client.query(`DELETE FROM students WHERE user_id = ${id}`, [], function (err, result) {
         if (err) {
-            throw err;
+            console.log(err)
         }
         console.log(result);
     });
@@ -203,7 +203,7 @@ app.listen(port, function () {
 // app.use(webpackDevMiddleware(compiler, {
 //     publicPath: config.output.publicPath,
 // }));
-
+//
 
 //var idTeacher;
 //console.log(user)

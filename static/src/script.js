@@ -1,7 +1,7 @@
-var nameOfStudent = document.getElementById("Name");
-var ageOfStudent = document.getElementById("Age");
-var lastNameOfStudent = document.getElementById("Lastname");
-var city = document.getElementById("City");
+var nameOfStudent1 = document.getElementById("Name");
+var ageOfStudent1 = document.getElementById("Age");
+var lastNameOfStudent1 = document.getElementById("Lastname");
+var city1 = document.getElementById("City");
 var createButton = document.getElementById("Create");
 var studentId = document.getElementById("StudentId");
 var newStudent = document.createElement("div");
@@ -10,27 +10,106 @@ var deleteById = document.getElementById("Delete");
 var updateButton = document.getElementById("Update");
 var xhr = new XMLHttpRequest();
 
-function renderTable(i, newStudentValue) {
-
+var id;
+function renderTable( newStudentValue) {
+    var btnUpdate;
+    var btnDelete;
     var divRow = "";
-    for (var key in newStudentValue[i]) {
-        divRow += "<div>"+ newStudentValue[i][key] +" </div>";
+    //console.log(parseInt("20del"))
+    //console.log(newStudentValue)
+
+    for (var key in newStudentValue) {
+        //console.log( newStudentValue[i].user_id)
+       // buttonUndate.setAttribute("id", `${newStudentValue[i].user_id}`)
+        id = `${newStudentValue.user_id}`
+        btnDelete =  `<button id = "${newStudentValue.user_id}del"  >Delete</button>`;
+        btnUpdate = `<button id = "${newStudentValue.user_id}upd" >Update</button>`
+        if(key === "user_id" || key === "teacher_id" ){
+            divRow +=  ""
+        }else {
+            divRow += "<div>" + newStudentValue[key] + " </div>";
+        }
     }
-    newStudent.innerHTML += "<div class='row' >" + divRow + "</div>";
+    newStudent.innerHTML += "<div class='row ' >" + divRow  +btnUpdate + btnDelete + "</div>";
+
+
     result.append(newStudent);
+
+
 }
 
 
-function createObj() {
-    var studentid = studentId.value;
+result.addEventListener("click", function (e) {
+    if (e.target.tagName !== 'BUTTON') return;
+    var rows = document.getElementsByClassName("row")
+
+    id = parseInt(e.target.getAttribute("id"));
+    //console.log(id)
+    var str = ""
+
+    if(e.target.innerText === "Update"){
+        e.target.parentNode.after (ok);
+        e.target.parentNode.after (city);
+        e.target.parentNode.after (lastNameOfStudent);
+        e.target.parentNode.after (ageOfStudent);
+        e.target.parentNode.after (nameOfStudent);
+        for(var key in e.target.parentNode.children){
+                if(e.target.parentNode.children[key].innerHTML!="undefined" || e.target.parentNode.children[key].innerHTML != "Update"
+                && e.target.parentNode.children[key].innerHTML != "Delete")
+                str += e.target.parentNode.children[key].innerHTML;
+
+        }
+        console.log(e.target.parentNode.children);
+        console.log(e.target)
+    } else {
+        deleteRow(id);
+    }
+});
+console.log(id)
+
+var nameOfStudent = document.createElement("input");
+var ageOfStudent = document.createElement("input");
+var lastNameOfStudent = document.createElement("input");
+var city = document.createElement("input");
+var ok = document.createElement("button");
+ok.addEventListener("click", updateInfo);
+ok.innerText = "ok";
+
+function updateInfo() {
+    console.log(id)
+    var studentid = id;
     var firstTd = nameOfStudent.value;
-    var secondTd = ageOfStudent.value;
-    var thirdTd = lastNameOfStudent.value;
+    var secondTd = lastNameOfStudent.value;
+    var thirdTd = ageOfStudent.value;
     var forth = city.value;
+    var data = {
+        id: studentid,
+        username: firstTd,
+        age: secondTd,
+        lastname:thirdTd,
+        city:forth
+    };
+
+    xhr.open("PUT", "/");
+
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send(JSON.stringify(data));
+    //document.location.reload()
+    document.getElementsByClassName("row").innerHTML = null;
+    ready()
+
+}
+
+function createObj() {
+
+    var firstTd = nameOfStudent1.value;
+    var secondTd = ageOfStudent1.value;
+    var thirdTd = lastNameOfStudent1.value;
+    var forth = city1.value;
 
 
     var userData = {
-        id: studentid,
+
         username: firstTd,
         age: secondTd,
         lastname:thirdTd,
@@ -39,23 +118,10 @@ function createObj() {
     return userData;
 }
 
-function updateInfo(method) {
-    if (studentId.value === "") {
-        return;
-    }
-    var data = createObj();
 
-    xhr.open("PUT", "/");
-
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send(JSON.stringify(data));
-    document.location.reload()
-}
 
 function createStudent() {
-    if (studentId.value === "") {
-        return;
-    }
+
     var data = createObj();
 
     xhr.open("POST", "/");
@@ -79,20 +145,18 @@ function ready(){
             alert("insert correct login or password")
         }else{
             var newStudentValue = JSON.parse(this.response);
-            for (let i = 0; i < newStudentValue.length; i++) {
-                renderTable(i, newStudentValue);
+            for (let i = 0; i < newStudentValue.length ; i++) {
+                renderTable( newStudentValue[i]);
             }
         }
     };
 
 }
 
-function deleteRow(){
-    if (studentId.value === "") {
-        return;
-    }
+function deleteRow(id){
 
-    var idstudent = studentId.value;
+
+    var idstudent = id;
 
     xhr.open("DELETE",`/:${idstudent}`);
 
@@ -100,11 +164,23 @@ function deleteRow(){
     document.location.reload()
 }
 function updateStudent() {
-    updateInfo("PUT");
+    updateInfo();
 }
 
 document.onload = ready();
-updateButton.addEventListener("click", updateStudent);
-deleteById.addEventListener("click", deleteRow);
+// updateButton.addEventListener("click", updateStudent);
+// deleteById.addEventListener("click", deleteRow);
 createButton.addEventListener("click", createStudent);
 
+
+
+// var buttonUndate = document.createElement("button");
+//     var buttonDelete = document.createElement("button" );
+//     buttonUndate.innerText = "update";
+//     buttonDelete.innerText = "delete";
+//
+//     buttonUndate.addEventListener("click", updateInfo);
+//     buttonDelete.addEventListener("click", deleteRow);
+//
+// newStudent.append(buttonDelete)
+//newStudent.append(buttonUndate)
