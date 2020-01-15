@@ -5,8 +5,8 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     entry: {
         scriptTable: __dirname + "/static/src/script.js",
-        autorization: __dirname + "/static/src/autorizationValidation.js",
-        login: __dirname + "/static/src/login.js",
+        autorization: __dirname + "/static/src/authorizationValidation.js",
+        registrationValidation: __dirname + "/static/src/registrationValidation.js",
         server: __dirname + "/server.js"
     }, // webpack entry point. Module to start building dependency graph
     output: {
