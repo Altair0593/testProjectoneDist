@@ -5,7 +5,7 @@ var bodyParser = require("body-parser");
 
 
 
-const {Client} = require('pg');
+const { Client } = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -15,7 +15,7 @@ const client = new Client({
 });
 
 
-client.connect(function(err) {
+client.connect(function (err) {
     if (err) throw err;
     console.log("Connected!");
 });
@@ -28,7 +28,8 @@ app.get("/authorization", function (req, res) {
     res.sendFile(__dirname + "/static/public/authorization.html");
 
 });
-var authorizated ;
+
+var authorizated;
 var teacherId;
 app.post("/authorization", function (req, res) {
     //console.log(req.body)
@@ -77,7 +78,7 @@ app.post("/registration", function (req, res) {
     client.query(`SELECT * FROM teachers WHERE login = '${user.login}';`, [], function (err, result) {
         console.log(result.rows, `${user.login}`);
         var baselogin;
-        for(var key in result.rows){
+        for (var key in result.rows) {
             console.log(`${user.login}`)
             baselogin = result.rows[key].login;
         }
@@ -108,6 +109,17 @@ app.get("/", function (req, res) {
 
 });
 
+app.get("/accountSetting", function (req, res) {
+
+    client.query(`SELECT * FROM teachers WHERE user_id = '${teacherId}';`, [], function (err, result) {
+
+        console.log(result.rows);
+        res.json(result.rows);
+
+    });
+
+});
+
 app.post("/", function (req, res) {
 
     var user = {
@@ -120,7 +132,7 @@ app.post("/", function (req, res) {
 
     var newUser = `INSERT INTO students( firstname, lastname, age, city, teacher_id) VALUES 
     ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${teacherId}')`;
-    client.query(newUser,[],
+    client.query(newUser, [],
         function (err, result) {
             if (err) {
                 console.log(err);
@@ -173,7 +185,7 @@ app.put("/", function (req, res) {
         upgradeSQL,
         function (err, result) {
             if (err) {
-                console.log( err);
+                console.log(err);
             }
             console.log(result);
         });
@@ -195,6 +207,55 @@ app.listen(port, function () {
 });
 
 
+app.put("/accountupdate", function (req, res) {
+    var userID = {
+        id: req.body.user_id
+    };
+    console.log(req.body, userID.id)
+    var queryColomn = [
+        "login",
+        "email",
+        "password",
+        "phone_number"
+    ];
+
+    var queryComand = "";
+
+    var valueCounter = 0;
+    var counterLink = 1;
+
+    var user = {
+        login: req.body.login,
+        email: req.body.email,
+        password: req.body.password,
+        phone_number: req.body.phone
+    };
+
+    var upgradeSQL = [];
+
+    Object.keys(user).forEach(function (key) {
+        if (!(this[key].length === 0)) {
+            upgradeSQL.push(`${this[key]}`);
+            // if ()
+            queryComand += queryColomn[valueCounter] + "= $" + counterLink + ",";
+
+            counterLink++
+        };
+        valueCounter++;
+    }, user);
+
+    queryComand = queryComand.substring(0, queryComand.length - 1);
+    console.log(upgradeSQL, queryComand);
+
+    client.query(`UPDATE teachers SET ${queryComand} WHERE user_id = ${userID.id}`,
+        upgradeSQL,
+        function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(result);
+        });
+});
 
 // const webpack = require('webpack');
 // const webpackDevMiddleware = require('webpack-dev-middleware');
