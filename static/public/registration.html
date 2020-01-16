@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Class List Registration</title>
+    <meta charset="UTF-8">
+    <title>Class List Registration</title>
+<!--  <link rel="stylesheet" href="./css/registration.less">-->
 </head>
 <body>
-  <main class="wrapper">
+<main class="wrapper">
     <div class="close">
-      <button class="close__btn" id="close">Close</button>
+        <button class="close__btn" id="close">Close</button>
     </div>
     <h1 class="registration__title">Registration</h1>
     <div class="registration-form" action="">
-      <div class="registration-form__item">
-        <label for="login">Login</label>
-        <input type="text" id="login" required>
-      </div>
-      <div class="registration-form__item">
-        <div class="alert-error" id="errorPassword1"></div>
-        <label for="password1">Password</label>
-        <input type="password" id="password1" required>
-      </div>
-      <div class="registration-form__item">
-        <div class="alert-error" id="errorPassword2"></div>
-        <label for="password2">Check password</label>
-        <input type="password" id="password2" required>
-      </div>
-      <div class="registration-form__item">
-        <label for="email">Email</label>
-        <input type="email" id="email" required>
-      </div>
-      <div class="registration-form__item">
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" required>
-      </div>
-      <div class="registration-form__item">
-      <div div class="registration-form__message" id="message"></div>
-      </div>
-      <div class="registration-form__item">
-        <button id="registrationBtn" class="registration-form__btn">Registration</button>
-      </div>
+        <div class="registration-form__item">
+            <label for="login">Login</label>
+            <input type="text" placeholder="Login" id="login" required>
+        </div>
+        <div class="registration-form__item">
+            <div class="alert-error" id="errorPassword1"></div>
+            <label for="password1">Password</label>
+            <input type="password" placeholder="Password" id="password1" required>
+        </div>
+        <div class="registration-form__item">
+            <div class="alert-error" id="errorPassword2"></div>
+            <label for="password2">Confirm password</label>
+            <input type="password" placeholder="Confirm Password" id="password2" required>
+        </div>
+        <div class="registration-form__item">
+            <label for="email">E-mail</label>
+            <input type="email" placeholder="E-mail" id="email" required>
+        </div>
+        <div class="registration-form__item">
+            <label for="phone">Phone number</label>
+            <input type="tel" placeholder="Phone number" id="phone" required>
+        </div>
+        <div class="registration-form__item">
+            <div div class="registration-form__message" id="message"></div>
+        </div>
+        <div class="registration-form__item">
+            <button id="registrationBtn" class="registration-form__btn">Register</button>
+        </div>
     </div>
-  </main>
+</main>
 </body>
 <script src="../src/registrationValidation.js"></script>
 </html>
