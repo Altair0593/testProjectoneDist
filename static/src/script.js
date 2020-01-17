@@ -15,19 +15,15 @@ function renderTable( newStudentValue) {
     var btnUpdate;
     var btnDelete;
     var divRow = "";
-    //console.log(parseInt("20del"))
-    //console.log(newStudentValue)
 
     for (var key in newStudentValue) {
-        //console.log( newStudentValue[i].user_id)
-       // buttonUndate.setAttribute("id", `${newStudentValue[i].user_id}`)
         id = `${newStudentValue.user_id}`
-        btnDelete =  `<button id = "${newStudentValue.user_id}del"  >Delete</button>`;
-        btnUpdate = `<button id = "${newStudentValue.user_id}upd" >Update</button>`
+        btnDelete =  `<button id = "${newStudentValue.user_id}del"  class="btn">Delete</button>`;
+        btnUpdate = `<button id = "${newStudentValue.user_id}upd"  class="btn">Update</button>`
         if(key === "user_id" || key === "teacher_id" ){
             divRow +=  ""
         }else {
-            divRow += "<div>" + newStudentValue[key] + " </div>";
+            divRow += `<input class="row_childs" value="${newStudentValue[key]}" disabled/>`;
         }
     }
     newStudent.innerHTML += "<div class='row ' >" + divRow  +btnUpdate + btnDelete + "</div>";
@@ -37,66 +33,64 @@ function renderTable( newStudentValue) {
 
 
 }
-
-
+function toggleBilling(arg) {
+    for (var i = 0; i < arg.length; i++) {
+        arg[i].disabled = !arg[i].disabled;
+    }
+}
+var allInputs;
 result.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
     var rows = document.getElementsByClassName("row")
 
     id = parseInt(e.target.getAttribute("id"));
-    //console.log(id)
-    var str = ""
+
+    var str = "";
 
     if(e.target.innerText === "Update"){
-        e.target.parentNode.after (ok);
-        e.target.parentNode.after (city);
-        e.target.parentNode.after (lastNameOfStudent);
-        e.target.parentNode.after (ageOfStudent);
-        e.target.parentNode.after (nameOfStudent);
-        for(var key in e.target.parentNode.children){
-                if(e.target.parentNode.children[key].innerHTML!="undefined" || e.target.parentNode.children[key].innerHTML != "Update"
-                && e.target.parentNode.children[key].innerHTML != "Delete")
-                str += e.target.parentNode.children[key].innerHTML;
-
-        }
-        console.log(e.target.parentNode.children);
-        console.log(e.target)
-    } else {
+       e.target.parentNode.append(ok)
+       allInputs = e.target.parentNode.getElementsByTagName("input");
+        toggleBilling(allInputs);
+        var upd = document.getElementById(e.target.getAttribute("id"));
+        var del = document.getElementById(`${id}del`);
+        del.style.display = "none";
+        upd.style.display = "none";
+    } else if(e.target.innerText === "Delete") {
         deleteRow(id);
     }
 });
-console.log(id)
 
-var nameOfStudent = document.createElement("input");
-var ageOfStudent = document.createElement("input");
-var lastNameOfStudent = document.createElement("input");
-var city = document.createElement("input");
+
 var ok = document.createElement("button");
 ok.addEventListener("click", updateInfo);
 ok.innerText = "ok";
+ok.classList.add("btn");
 
 function updateInfo() {
-    console.log(id)
-    var studentid = id;
-    var firstTd = nameOfStudent.value;
-    var secondTd = lastNameOfStudent.value;
-    var thirdTd = ageOfStudent.value;
-    var forth = city.value;
-    var data = {
-        id: studentid,
-        username: firstTd,
-        age: secondTd,
-        lastname:thirdTd,
-        city:forth
-    };
 
+    var arrValues = [];
+
+    for(key in allInputs){
+        arrValues.push(allInputs[key].value)
+    }
+
+    var arrValuestoSend = arrValues.slice(0, -3);
+    console.log(arrValuestoSend)
+     var data = {
+        id: id,
+        username: arrValuestoSend[0],
+        age: arrValuestoSend[1],
+        lastname:arrValuestoSend[2],
+        city:arrValuestoSend[3]
+    };
+    console.log(data)
     xhr.open("PUT", "/");
 
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
-    //document.location.reload()
-    document.getElementsByClassName("row").innerHTML = null;
-    ready()
+    document.location.reload()
+    //document.getElementsByClassName("row").innerHTML = null;
+
 
 }
 
@@ -136,7 +130,10 @@ function createStudent() {
 }
 
 function ready(){
-
+    var div = document.createElement("div");
+    document.body.append(div);
+    div.innerText = localStorage.getItem("loginName");
+    div.style.color = "white"
     xhr.open("GET","/");
     xhr.send();
 
@@ -171,6 +168,25 @@ document.onload = ready();
 // updateButton.addEventListener("click", updateStudent);
 // deleteById.addEventListener("click", deleteRow);
 createButton.addEventListener("click", createStudent);
+
+
+
+
+// e.target.parentNode.after (ok);
+// e.target.parentNode.after (city);
+// e.target.parentNode.after (lastNameOfStudent);
+// e.target.parentNode.after (ageOfStudent);
+// e.target.parentNode.after (nameOfStudent);
+// for(var key in e.target.parentNode.children){
+//         if(e.target.parentNode.children[key].innerHTML!="undefined" || e.target.parentNode.children[key].innerHTML != "Update"
+//         && e.target.parentNode.children[key].innerHTML != "Delete")
+//         str += e.target.parentNode.children[key].innerHTML;
+//
+// }
+// console.log(e.target.parentNode.children);
+// console.log(e.target)
+
+
 
 
 

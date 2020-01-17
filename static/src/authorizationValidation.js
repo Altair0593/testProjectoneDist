@@ -5,10 +5,11 @@ var registrationBtn = document.getElementById("registrationBtnAvt")
 var loginValue = {};
 logInBtn.addEventListener("click", getElementValue);
 registrationBtn.addEventListener("click", function () {
-    document.location.href = 'http://localhost:3000/registration'
-})
+    document.location.href = 'http://localhost:3000/public/registration.html'
+});
 function getElementValue() {
      loginValue = {login: loginAvt.value, password: passwordAvt.value};
+    localStorage.setItem('loginName', loginAvt.value)
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/authorization");
     xhr.setRequestHeader("Content-type", "application/json");
@@ -21,6 +22,6 @@ function getElementValue() {
         }
     }
 }
-
+//import  "../public/css/autorization.less";
 
 
