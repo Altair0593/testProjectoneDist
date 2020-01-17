@@ -20,7 +20,17 @@
     font-family: 'Nanum Gothic', sans-serif;
 
 }
-
+.btn{
+    padding: 10px;
+}
+.row input:disabled{
+    background: #08AEEA;
+}
+.row input{
+    background: darkblue;
+    color: white;
+    width: 20%;
+}
 * {
     margin: 0;
     padding: 0;

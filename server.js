@@ -22,17 +22,14 @@ client.connect(function (err) {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
+
 var port = 3000;
-app.get("/authorization", function (req, res) {
 
-    res.sendFile(__dirname + "/static/public/authorization.html");
-
-});
 
 var authorizated;
 var teacherId;
 app.post("/authorization", function (req, res) {
-    //console.log(req.body)
+
     var user = {
         login: req.body.login,
         password: req.body.password,
@@ -62,12 +59,6 @@ app.post("/authorization", function (req, res) {
     });
 });
 
-app.get("/registration", function (req, res) {
-
-    res.sendFile(__dirname + "/static/public/registration.html");
-
-});
-
 app.post("/registration", function (req, res) {
     var user = {
         login: req.body.login,
@@ -94,6 +85,7 @@ app.post("/registration", function (req, res) {
 
 });
 app.get("/", function (req, res) {
+
     // if(authorizated == "") {
     //     res.status(401).send('Unauthorized ');
     //     return
@@ -121,7 +113,7 @@ app.get("/accountSetting", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-
+    console.log(req.body)
     var user = {
 
         username: req.body.username,
@@ -129,7 +121,7 @@ app.post("/", function (req, res) {
         lastname: req.body.lastname,
         city: req.body.city
     };
-
+//server.js
     var newUser = `INSERT INTO students( firstname, lastname, age, city, teacher_id) VALUES 
     ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${teacherId}')`;
     client.query(newUser, [],
@@ -264,7 +256,7 @@ app.put("/accountupdate", function (req, res) {
 // app.use(webpackDevMiddleware(compiler, {
 //     publicPath: config.output.publicPath,
 // }));
-//
+
 
 //var idTeacher;
 //console.log(user)
