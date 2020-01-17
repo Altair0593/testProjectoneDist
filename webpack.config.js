@@ -1,20 +1,21 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // Require  html-webpack-plugin plugin
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     entry: {
-        scriptTable: __dirname + "/static/src/script.js",
-        autorization: __dirname + "/static/src/autorizationValidation.js",
-        login: __dirname + "/static/src/login.js",
-        server: __dirname + "/server.js"
-    }, // webpack entry point. Module to start building dependency graph
-    output: {
-        path: __dirname + '/dist', // Folder to store generated bundle
-        filename: '[name].js',  // Name of generated bundle after build
-        publicPath: '/' // public URL of the output directory when referenced in a browser
+        authorization: __dirname + "/static/src/authorizationValidation.js",
+        index: __dirname + "/static/src/script.js",
+        registration: __dirname + "/static/src/registrationValidation.js",
+        accountSettings: __dirname + "/static/src/AccountSettingValidation.js",
+        //server: __dirname + "/server.js"
     },
-    module: {  // where we defined file patterns and their loaders
+    output: {
+        path: __dirname + '/dist',
+        filename: '[name].js',
+        publicPath: '/'
+    },
+    module: {
         rules: [
             {
                 test: /\.js$/,
@@ -31,10 +32,10 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: 'css-loader', // translates CSS into CommonJS
+                        loader: 'css-loader',
 
                     }, {
-                        loader: 'less-loader', // compiles Less to CSS
+                        loader: 'less-loader',
 
                     }]
 
@@ -47,22 +48,31 @@ module.exports = {
             }
         ]
     },
-    plugins: [  // Array of plugins to apply to build chunk
+    plugins: [
         new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            filename: "index.html",
-            template: __dirname + "/static/public/index.html",
-            inject: 'body'
-        }),
         new HtmlWebpackPlugin({
             filename: "authorization.html",
             template: __dirname + "/static/public/authorization.html",
-            inject: 'body'
+            inject: 'body',
+            chunks: [ "authorization"]
+        }),
+        new HtmlWebpackPlugin({
+            filename: "index.html",
+            template: __dirname + "/static/public/index.html",
+            inject: 'body',
+            chunks: ["index"]
         }),
         new HtmlWebpackPlugin({
             filename: "registration.html",
             template: __dirname + "/static/public/registration.html",
-            inject: 'body'
+            inject: 'body',
+            chunks: ["registration"]
+        }),
+        new HtmlWebpackPlugin({
+            filename: "accountSettings.html",
+            template: __dirname + "/static/public/accountSettings.html",
+            inject: 'body',
+            chunks: [ "accountSettings"]
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
@@ -70,8 +80,8 @@ module.exports = {
         }),
     ],
     devtool: 'inline-source-map',
-    devServer: {  // configuration for webpack-dev-server
-        contentBase:  './dist',  //source of static assets
-        port: 7700, // port to run dev-server
+    devServer: {
+        contentBase: __dirname + './dist',
+        port: 7800,
     }
 }

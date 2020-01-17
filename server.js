@@ -22,7 +22,12 @@ client.connect(function (err) {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
-
+app.use(function(req, res, next) {
+    //console.log("USE");
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 var port = 3000;
 
 
@@ -133,7 +138,7 @@ app.post("/", function (req, res) {
         });
 });
 
-app.put("/", function (req, res) {
+app.post("/update", function (req, res) {
     var userID = {
         id: req.body.id
     };
@@ -183,9 +188,10 @@ app.put("/", function (req, res) {
         });
 });
 
-app.delete("/:id", function (req, res) {
+app.post("/delete", function (req, res) {
 
-    var id = (req.params.id).slice(1);
+    //var id = (req.params.id).slice(1);
+    var id = req.body.id
     client.query(`DELETE FROM students WHERE user_id = ${id}`, [], function (err, result) {
         if (err) {
             console.log(err)
@@ -199,7 +205,7 @@ app.listen(port, function () {
 });
 
 
-app.put("/accountupdate", function (req, res) {
+app.post("/accountupdate", function (req, res) {
     var userID = {
         id: req.body.user_id
     };

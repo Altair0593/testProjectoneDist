@@ -9,7 +9,7 @@ var result = document.getElementById("resulttable");
 var deleteById = document.getElementById("Delete");
 var updateButton = document.getElementById("Update");
 var myAccountBtn= document.getElementById("myAccount");
-myAccountBtn.addEventListener("click", function(){document.location.href = 'http://localhost:3000/public/accountSettings.html'})
+myAccountBtn.addEventListener("click", function(){document.location.href = 'http://localhost:7800/accountSettings.html'})
 var xhr = new XMLHttpRequest();
 
 var id;
@@ -72,7 +72,7 @@ function updateInfo() {
 
     var arrValues = [];
 
-    for(key in allInputs){
+    for(var key in allInputs){
         arrValues.push(allInputs[key].value)
     }
 
@@ -81,12 +81,12 @@ function updateInfo() {
      var data = {
         id: id,
         username: arrValuestoSend[0],
-        age: arrValuestoSend[1],
-        lastname:arrValuestoSend[2],
+        lastname: arrValuestoSend[1],
+         age:arrValuestoSend[2],
         city:arrValuestoSend[3]
     };
     console.log(data)
-    xhr.open("PUT", "/");
+    xhr.open("POST", "http://localhost:3000/update");
 
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
@@ -120,7 +120,7 @@ function createStudent() {
 
     var data = createObj();
 
-    xhr.open("POST", "/");
+    xhr.open("POST", "http://localhost:3000/");
 
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
@@ -135,8 +135,8 @@ function ready(){
     var div = document.createElement("div");
     document.body.append(div);
     div.innerText = localStorage.getItem("loginName");
-    div.style.color = "white"
-    xhr.open("GET","/");
+    div.style.color = "white";
+    xhr.open("GET","http://localhost:3000/");
     xhr.send();
 
     xhr.onload = function () {
@@ -156,10 +156,14 @@ function deleteRow(id){
 
 
     var idstudent = id;
+    var data ={
+        id:id
+    }
+    console.log(`http://localhost:3000/:${idstudent}`)
+    xhr.open("POST",`http://localhost:3000/delete`);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send(JSON.stringify(data));
 
-    xhr.open("DELETE",`/:${idstudent}`);
-
-    xhr.send();
     document.location.reload()
 }
 function updateStudent() {
@@ -167,38 +171,10 @@ function updateStudent() {
 }
 
 document.onload = ready();
-// updateButton.addEventListener("click", updateStudent);
-// deleteById.addEventListener("click", deleteRow);
+
 createButton.addEventListener("click", createStudent);
 
+import "../public/css/index.less"
 
 
 
-// e.target.parentNode.after (ok);
-// e.target.parentNode.after (city);
-// e.target.parentNode.after (lastNameOfStudent);
-// e.target.parentNode.after (ageOfStudent);
-// e.target.parentNode.after (nameOfStudent);
-// for(var key in e.target.parentNode.children){
-//         if(e.target.parentNode.children[key].innerHTML!="undefined" || e.target.parentNode.children[key].innerHTML != "Update"
-//         && e.target.parentNode.children[key].innerHTML != "Delete")
-//         str += e.target.parentNode.children[key].innerHTML;
-//
-// }
-// console.log(e.target.parentNode.children);
-// console.log(e.target)
-
-
-
-
-
-// var buttonUndate = document.createElement("button");
-//     var buttonDelete = document.createElement("button" );
-//     buttonUndate.innerText = "update";
-//     buttonDelete.innerText = "delete";
-//
-//     buttonUndate.addEventListener("click", updateInfo);
-//     buttonDelete.addEventListener("click", deleteRow);
-//
-// newStudent.append(buttonDelete)
-//newStudent.append(buttonUndate)

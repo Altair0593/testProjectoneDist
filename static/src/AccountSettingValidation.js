@@ -5,7 +5,7 @@ SaveBtn.addEventListener("click", getValidation);
 
 function getUserData() {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "/accountSetting");
+    xhr.open("GET", "http://localhost:3000/accountSetting");
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send();
     xhr.onload = function () {
@@ -38,11 +38,11 @@ function getValidation() {
     console.log(elementValue);
     if (checkEmail(elementValue.email) && checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "380")) {
         let xhr = new XMLHttpRequest();
-        xhr.open("PUT", "/accountupdate");
+        xhr.open("POST", "http://localhost:3000/accountupdate");
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(elementValue));
         message.innerHTML = "Changes included";
-        setTimeout(document.location.href = 'http://localhost:3000/authorization', 1500);
+        setTimeout(document.location.href = 'http://localhost:7800/authorization.html', 1500);
        
     } else {
         message.innerHTML = err;

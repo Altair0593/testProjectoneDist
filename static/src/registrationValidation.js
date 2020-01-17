@@ -16,7 +16,7 @@ function getValidation() {
     if (checkEmail(elementValue.email) && checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "380")) {
         delete elementValue.password2;
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/registration");
+        xhr.open("POST", "http://localhost:3000/registration");
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(elementValue));
         xhr.onreadystatechange = function () {
@@ -26,7 +26,7 @@ function getValidation() {
 
         }
         message.innerHTML = "Регистрация успешна";
-        setTimeout(document.location.href = 'http://localhost:3000/authorization', 1500);
+        setTimeout(document.location.href = 'http://localhost:7800/authorization.html', 1500);
     } else {
         message.innerHTML = err;
     };
@@ -66,3 +66,5 @@ function checkEmail(email) {
     err = "Некорректный e-mail"
     return false;
 }
+
+import "../public/css/registration.less"

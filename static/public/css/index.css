@@ -1,277 +1,213 @@
-.row{
-    display: flex;
-    justify-content: space-around;
-    /*border: 1px solid #000000;*/
-    border-top: 0;
-    border-collapse: collapse;
+.row {
+  display: flex;
+  justify-content: space-around;
+  /*border: 1px solid #000000;*/
+  border-top: 0;
+  border-collapse: collapse;
 }
 .row > div {
-    text-align: center;
-    width: calc(100% / 4);
-
-    border: 1px solid #fcff7b;
-    border-top: 0;
-    border-collapse: collapse;
-
-    background-color: rgba(96, 29, 2, 0.6);
-
-    color: #ffffff;
-    font-size: 16px;
-    font-family: 'Nanum Gothic', sans-serif;
-
+  text-align: center;
+  width: calc(100% / 4);
+  border: 1px solid #fcff7b;
+  border-top: 0;
+  border-collapse: collapse;
+  background-color: rgba(96, 29, 2, 0.6);
+  color: #ffffff;
+  font-size: 16px;
+  font-family: 'Nanum Gothic', sans-serif;
 }
-.btn{
-    padding: 10px;
+.btn {
+  padding: 10px;
 }
-.row input:disabled{
-    background: #08AEEA;
+.row input:disabled {
+  background: #08AEEA;
 }
-.row input{
-    background: darkblue;
-    color: white;
-    width: 20%;
+.row input {
+  background: darkblue;
+  color: white;
+  width: 20%;
 }
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
-
 body {
-    height: 100vh;
+  height: 100vh;
 }
-
 .main-wrapper {
-    background-color: #08AEEA;
-    background-color: black;
-
-    position: fixed;
-    z-index: -1;
-
-    width: 100%;
-    height: 100%;
-
-    /* Firefox */
-    background-image:
-            -moz-radial-gradient(circle, #FFFFFF 2px, rgba(248,255,128,.5) 4px, transparent 40px),
-            -moz-radial-gradient(circle, #FFFFFF 1px, rgba(255,186,170,.4) 3px, transparent 30px),
-            -moz-radial-gradient(circle, rgba(255,255,255,.9) 1px, rgba(251,255,186,.3) 2px, transparent 40px),
-            -moz-radial-gradient(circle, rgba(255,255,255,.4), rgba(253,255,219,.2) 1px, transparent 30px);
-
-    /* Webkit */
-    background-image:
-            -webkit-gradient(radial, 50% 50%, 2, 50% 50%, 40, from(white), color-stop(0.1, rgba(248,255,128,.5)), to(transparent)),
-            -webkit-gradient(radial, 50% 50%, 1, 50% 50%, 30, from(white), color-stop(0.1, rgba(255,186,170,.4)), to(transparent)),
-            -webkit-gradient(radial, 50% 50%, 1, 50% 50%, 40, from(rgba(255,255,255,.9)), color-stop(0.05, rgba(251,255,186,.3)), to(transparent)),
-            -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 30, from(rgba(255,255,255,.4)), color-stop(0.03, rgba(253,255,219,.2)), to(transparent));
-
-    /* Background Attributes */
-    background-size: 550px 550px, 350px 350px, 250px 270px, 220px 200px;
+  background-color: #08AEEA;
+  background-color: black;
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  /* Firefox */
+  background-image: -moz-radial-gradient(circle, #FFFFFF 2px, rgba(248, 255, 128, 0.5) 4px, transparent 40px), -moz-radial-gradient(circle, #FFFFFF 1px, rgba(255, 186, 170, 0.4) 3px, transparent 30px), -moz-radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, rgba(251, 255, 186, 0.3) 2px, transparent 40px), -moz-radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(253, 255, 219, 0.2) 1px, transparent 30px);
+  /* Webkit */
+  background-image: -webkit-gradient(radial, 50% 50%, 2, 50% 50%, 40, from(white), color-stop(0.1, rgba(248, 255, 128, 0.5)), to(transparent)), -webkit-gradient(radial, 50% 50%, 1, 50% 50%, 30, from(white), color-stop(0.1, rgba(255, 186, 170, 0.4)), to(transparent)), -webkit-gradient(radial, 50% 50%, 1, 50% 50%, 40, from(rgba(255, 255, 255, 0.9)), color-stop(0.05, rgba(251, 255, 186, 0.3)), to(transparent)), -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 30, from(rgba(255, 255, 255, 0.4)), color-stop(0.03, rgba(253, 255, 219, 0.2)), to(transparent));
+  /* Background Attributes */
+  background-size: 550px 550px, 350px 350px, 250px 270px, 220px 200px;
+  background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
+  /* Animation */
+  animation-name: movement;
+  animation-duration: 5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  /* Firefox */
+  -moz-animation-name: movement;
+  -moz-animation-duration: 5s;
+  -moz-animation-timing-function: linear;
+  -moz-animation-iteration-count: infinite;
+  /* Webkit */
+  -webkit-animation-name: movement;
+  -webkit-animation-duration: 5s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+@keyframes movement {
+  from {
     background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
-
-    /* Animation */
-    animation-name: movement;
-    animation-duration: 5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-
-    /* Firefox */
-    -moz-animation-name: movement;
-    -moz-animation-duration: 5s;
-    -moz-animation-timing-function: linear;
-    -moz-animation-iteration-count: infinite;
-
-    /* Webkit */
-    -webkit-animation-name: movement;
-    -webkit-animation-duration: 5s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: infinite;
+  }
+  to {
+    background-position: -550px 0, -320px 60px, -120px 270px, -150px 150px;
+  }
 }
-
-@keyframes movement
-{
-    from {
-        background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
-    }
-    to {
-        background-position: -550px 0, -320px 60px, -120px 270px, -150px 150px;
-    }
+@-moz-keyframes movement {
+  from {
+    background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
+  }
+  to {
+    background-position: -550px 0, -320px 60px, -120px 270px, -150px 150px;
+  }
 }
-@-moz-keyframes movement
-{
-    from {
-        background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
-    }
-    to {
-        background-position: -550px 0, -320px 60px, -120px 270px, -150px 150px;
-    }
+@-webkit-keyframes movement {
+  from {
+    background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
+  }
+  to {
+    background-position: -550px 0, -320px 60px, -120px 270px, -150px 150px;
+  }
 }
-@-webkit-keyframes movement
-{
-    from {
-        background-position: 0 0, 30px 60px, 130px 270px, 70px 150px;
-    }
-    to {
-        background-position: -550px 0, -320px 60px, -120px 270px, -150px 150px;
-    }
-}
-
 .visually-hidden {
-    position: absolute !important;
-    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-    clip: rect(1px, 1px, 1px, 1px);
-    padding:0 !important;
-    border:0 !important;
-    height: 1px !important;
-    width: 1px !important;
-    overflow: hidden;
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
 }
-
 .wrapper {
-    padding: 50px;
-
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 24px;
-    font-weight: 400;
-    color: #ffffff;
-    line-height: 28px;
+  padding: 50px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 24px;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 28px;
 }
-
 .wrapper h2 {
-    margin-bottom: 50px;
-
-    color: #e8d81e;
-    text-transform: uppercase;
-
-    position: relative;
-
-    transition: all .2s linear;
+  margin-bottom: 50px;
+  color: #e8d81e;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.2s linear;
 }
-
 .wrapper h2:hover {
-    position: relative;
-    transform: translate(-5px, -2px);
+  position: relative;
+  transform: translate(-5px, -2px);
 }
-
-
 .wrapper h2::after {
-    content: "";
-    width: 50%;
-    height: 2px;
-
-    background-color: #fcff7b;
-
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    z-index: 1;
-
-    transform: translate(-50%);
+  content: "";
+  width: 50%;
+  height: 2px;
+  background-color: #fcff7b;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%);
 }
-
 .wrapper__item {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
 }
-
 .result-table,
 .input-wrapper {
-    width: 100%;
-    display: flex;
-    /*flex-wrap: wrap;*/
-
-    flex-direction: row;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  /*flex-wrap: wrap;*/
+  flex-direction: row;
+  justify-content: center;
 }
-
 .input-wrapper {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-
 .result-table__item {
-    text-align: center;
-    width: calc(100% / 4);
-    color: #fcff7b;
-
-    background-color: rgba(205, 43, 34, .9);
-    /*background-color: #cd2b22;*/
-
-    border: 2px solid #fcff7b;
+  text-align: center;
+  width: calc(100% / 4);
+  color: #fcff7b;
+  background-color: rgba(205, 43, 34, 0.9);
+  /*background-color: #cd2b22;*/
+  border: 2px solid #fcff7b;
 }
-
 .input-container {
-    display: flex;
-    flex-direction: column;
-    width: calc(100% / 5.5);
-
-    margin: 0 3px;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% / 5.5);
+  margin: 0 3px;
 }
-
 .input-container label {
-    color: #fcff7b;
+  color: #fcff7b;
 }
-
 .input-item {
-    font-size: 14px;
-
-    padding: 10px 5px;
+  font-size: 14px;
+  padding: 10px 5px;
 }
-
 .control,
-.control__item{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 .control__item {
-    width: calc(100% / 4);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-
+.control__item {
+  width: calc(100% / 4);
+}
 .control__input {
-    display: block;
-    width: 70%;
-    height: 60px;
-
-    cursor: pointer;
-    border: none;
-    outline: none;
-
-    font-size: 14px;
-    color: #ffffff;
-
-    border-radius: 12px;
-
-    opacity: 1;
-    transition: opacity .1s linear;
+  display: block;
+  width: 70%;
+  height: 60px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #ffffff;
+  border-radius: 12px;
+  opacity: 1;
+  transition: opacity 0.1s linear;
 }
-
 .control__input:hover {
-    opacity: .7;
+  opacity: 0.7;
 }
-
 .control__input:active {
-    opacity: .5;
+  opacity: 0.5;
 }
-
 .control__input--create {
-    background-color: #feac00;
+  background-color: #feac00;
 }
-
 .control__input--read {
-    background-color: #66be59;
+  background-color: #66be59;
 }
-
 .control__input--update {
-    background-color: #2196F3;
+  background-color: #2196F3;
 }
-
 .control__input--delete {
-    background-color: red;
+  background-color: red;
 }
+/*# sourceMappingURL=index.css.map */
