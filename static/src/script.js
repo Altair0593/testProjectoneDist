@@ -8,6 +8,8 @@ var newStudent = document.createElement("div");
 var result = document.getElementById("resulttable");
 var deleteById = document.getElementById("Delete");
 var updateButton = document.getElementById("Update");
+var myAccountBtn= document.getElementById("myAccount");
+myAccountBtn.addEventListener("click", function(){document.location.href = 'http://localhost:3000/public/accountSettings.html'})
 var xhr = new XMLHttpRequest();
 
 var id;
