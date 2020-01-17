@@ -1,5 +1,27 @@
-let registrationBtn = document.getElementById("registrationBtn");
-registrationBtn.addEventListener("click", getValidation);
+let teacher = getUserData();
+setTimeout(fillInput, 800);
+let SaveBtn = document.getElementById("SaveBtn");
+SaveBtn.addEventListener("click", getValidation);
+
+function getUserData() {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/accountSetting");
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send();
+    xhr.onload = function () {
+        teacher = JSON.parse(this.response);
+        console.log(teacher);
+    };
+};
+
+function fillInput() {
+    document.getElementById("login").value = teacher[0].login;
+    document.getElementById("email").value = teacher[0].email;
+    document.getElementById("password1").value = teacher[0].password;
+    document.getElementById("password2").value = teacher[0].password;
+    document.getElementById("phone").value = teacher[0].phone_number;
+}
+
 let err = "";
 let User = function () {
     this.login = document.getElementById("login").value.replace(/\s/g, '');
@@ -7,6 +29,7 @@ let User = function () {
     this.password2 = document.getElementById("password2").value;
     this.email = document.getElementById("email").value;
     this.phone = document.getElementById("phone").value.replace(/[+()-\s]/g, '');
+    this.user_id= teacher[0].user_id;
 }
 
 function getValidation() {
@@ -14,23 +37,18 @@ function getValidation() {
     let message = document.getElementById("message");
     console.log(elementValue);
     if (checkEmail(elementValue.email) && checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "380")) {
-        delete elementValue.password2;
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "/registration");
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(elementValue));
-        xhr.onreadystatechange = function () {
-            if (xhr.status === 400) {
-                message.innerHTML = "Такой логин уже существует!";
-            }
-
-        }
-        message.innerHTML = "Регистрация успешна";
+        xhr.open("PUT", "/accountupdate");
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send(JSON.stringify(elementValue));
+        message.innerHTML = "Changes included";
         setTimeout(document.location.href = 'http://localhost:3000/authorization', 1500);
+       
     } else {
         message.innerHTML = err;
     };
 }
+
 
 function checklogin(login) {
     if (login.length < 1 || !isNaN(Number(login[0]))) {
