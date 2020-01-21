@@ -3,19 +3,32 @@ var ageOfStudent1 = document.getElementById("Age");
 var lastNameOfStudent1 = document.getElementById("Lastname");
 var city1 = document.getElementById("City");
 var createButton = document.getElementById("Create");
-var studentId = document.getElementById("StudentId");
 var newStudent = document.createElement("div");
 var result = document.getElementById("resulttable");
-var deleteById = document.getElementById("Delete");
-var updateButton = document.getElementById("Update");
 var myAccountBtn= document.getElementById("myAccount");
 var exitCabinet = document.getElementById('exitCabinet');
-myAccountBtn.addEventListener("click", function(){document.location.href = 'http://localhost:7800/accountSettings.html'});
-exitCabinet.addEventListener('click', function(){document.location.href = 'http://localhost:7800/authorization.html'});
-
+createButton.addEventListener("click", createStudent);
+myAccountBtn.addEventListener("click", function(){
+    document.location.href = 'http://localhost:7800/accountSettings.html'
+});
+exitCabinet.addEventListener('click', function(){
+    document.location.href = 'http://localhost:7800/authorization.html'
+});
+var localhostServ = "http://localhost:3000";
 var xhr = new XMLHttpRequest();
-
 var id;
+var allInputs;
+var ok = document.createElement("button");
+ok.innerText = "ok";
+ok.classList.add("btn");
+ok.addEventListener("click", updateInfo);
+var cancel = document.createElement("button");
+cancel.innerText = "cancel";
+cancel.classList.add("btn");
+cancel.addEventListener("click", function () {
+    document.location.reload()
+});
+
 function renderTable( newStudentValue) {
     var btnUpdate;
     var btnDelete;
@@ -43,7 +56,7 @@ function toggleBilling(arg) {
         arg[i].disabled = !arg[i].disabled;
     }
 }
-var allInputs;
+
 result.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
     var rows = document.getElementsByClassName("row");
@@ -73,24 +86,14 @@ result.addEventListener("click", function (e) {
     }
 });
 
-var ok = document.createElement("button");
-ok.addEventListener("click", updateInfo);
-ok.innerText = "ok";
-ok.classList.add("btn");
-var cancel = document.createElement("button");
-cancel.addEventListener("click", updateInfo);
-cancel.innerText = "cancel";
-cancel.classList.add("btn");
 
 function updateInfo() {
     var arrValues = [];
-
     for(var key in allInputs){
         arrValues.push(allInputs[key].value)
     }
 
     var arrValuestoSend = arrValues.slice(0, -3);
-    console.log(arrValuestoSend)
     var data = {
         id: id,
         username: arrValuestoSend[0],
@@ -98,8 +101,8 @@ function updateInfo() {
         age:arrValuestoSend[2],
         city:arrValuestoSend[3]
     };
-    console.log(data)
-    xhr.open("POST", "http://localhost:3000/update");
+
+    xhr.open("POST", `${localhostServ}/update`);
 
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
@@ -108,24 +111,24 @@ function updateInfo() {
 }
 
 function createObj() {
-    var firstTd = nameOfStudent1.value;
-    var secondTd = ageOfStudent1.value;
-    var thirdTd = lastNameOfStudent1.value;
-    var forth = city1.value;
-
     var userData = {
-        username: firstTd,
-        age: secondTd,
-        lastname:thirdTd,
-        city:forth
+        username:  nameOfStudent1.value,
+        age: ageOfStudent1.value,
+        lastname:lastNameOfStudent1.value,
+        city:city1.value
     };
-    return userData;
+    if(userData.username === "" || userData.lastname === "" || userData.age === "" || userData.city === ""){
+        return false
+    } else {
+        return userData;
+    }
 }
 
 function createStudent() {
     var data = createObj();
+    if(!data)return;
 
-    xhr.open("POST", "http://localhost:3000/");
+    xhr.open("POST", `${localhostServ}`);
 
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
@@ -139,7 +142,7 @@ function createStudent() {
 function ready(){
     var div = document.getElementById("indexLoginName");
     div.innerText = localStorage.getItem("loginName");
-    xhr.open("GET","http://localhost:3000/");
+    xhr.open("GET",`${localhostServ}`);
     xhr.send();
 
     xhr.onload = function () {
@@ -158,22 +161,15 @@ function deleteRow(id){
     var idstudent = id;
     var data ={
         id:id
-    }
-    console.log(`http://localhost:3000/:${idstudent}`)
-    xhr.open("POST",`http://localhost:3000/delete`);
+    };
+    xhr.open("POST",`${localhostServ}/delete`);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
 
     document.location.reload()
 }
-function updateStudent() {
-    updateInfo();
-}
 
 document.onload = ready();
-
-createButton.addEventListener("click", createStudent);
-
 import "../public/css/index.less"
 
 

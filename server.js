@@ -16,7 +16,7 @@ const client = new Client({
 
 
 client.connect(function (err) {
-    if (err) throw err;
+    //if (err) throw err;
     console.log("Connected!");
 });
 
@@ -91,18 +91,10 @@ app.post("/registration", function (req, res) {
 });
 app.get("/", function (req, res) {
 
-    // if(authorizated == "") {
-    //     res.status(401).send('Unauthorized ');
-    //     return
-    // } else {
     client.query(`SELECT * FROM students WHERE teacher_id = '${teacherId}' ORDER BY user_id ;`, [], function (err, result) {
-        //if(!authorizated == "") {
         res.json(result.rows);
-        // } else {
-        //     return;
-        // }
+
     });
-    //}
 
 });
 
@@ -171,7 +163,7 @@ app.post("/update", function (req, res) {
             queryComand += queryColomn[valueCounter] + "= $" + counterLink + ",";
 
             counterLink++
-        };
+        }
         valueCounter++;
     }, user);
 
@@ -190,8 +182,7 @@ app.post("/update", function (req, res) {
 
 app.post("/delete", function (req, res) {
 
-    //var id = (req.params.id).slice(1);
-    var id = req.body.id
+    var id = req.body.id;
     client.query(`DELETE FROM students WHERE user_id = ${id}`, [], function (err, result) {
         if (err) {
             console.log(err)
@@ -209,7 +200,6 @@ app.post("/accountupdate", function (req, res) {
     var userID = {
         id: req.body.user_id
     };
-    console.log(req.body, userID.id)
     var queryColomn = [
         "login",
         "email",
@@ -238,7 +228,7 @@ app.post("/accountupdate", function (req, res) {
             queryComand += queryColomn[valueCounter] + "= $" + counterLink + ",";
 
             counterLink++
-        };
+        }
         valueCounter++;
     }, user);
 
@@ -262,36 +252,3 @@ app.post("/accountupdate", function (req, res) {
 // app.use(webpackDevMiddleware(compiler, {
 //     publicPath: config.output.publicPath,
 // }));
-
-
-//var idTeacher;
-//console.log(user)
-// client.query(`SELECT * FROM teachers WHERE login = '${authorizated}';`, [], function (err, result) {
-//     console.log(result.rows, `${authorizated}`);
-//
-//     for (var key in result.rows) {
-//         console.log(result.rows[key]);
-//         idTeacher = result.rows[key].user_id;
-//
-//         //res.json(JSON.stringify("exit"));
-//     }
-// });
-
-//console.log(idTeacher)
-//console.log(result.rows, `${authorizated}`);
-
-// for (var key in result.rows) {
-//     console.log(result.rows[key]);
-//     idTeacher = result.rows[key].user_id;
-//
-// }
-
-
-
-// client.query('SELECT * FROM student ORDER BY user_id;', [], function (err, result) {
-//
-//     if (err) {
-//         return next(err)
-//     };
-//     res.json(result.rows);
-// });

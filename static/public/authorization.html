@@ -7,31 +7,36 @@
 </head>
 <body>
 <main class="wrapper">
-  <div class="wrapper__main">
-  <h1 class="authorization_title">Authorization</h1>
-  <div class="authorization-form" >
-    <div class="authorization-form__item">
-      <div>
+  <div class="main">
+  <div class="main__authorization-title">
+    <h1 class="authorization_title">Authorization</h1>
+  </div>
+  <div class="main__authorization-form" >
+    <div class="authorization-form-item">
+      <div class="authorization-form__label">
         <label for="loginAvt">Login:</label>
       </div>
 
-      <input type="text" id="loginAvt" placeholder="write your login " required>
+      <div class="authorization-form__input-wrapper">
+        <input class="custom-input" type="text" id="loginAvt" placeholder="write your login " required>
+      </div>
     </div>
-    <div class="authorization-form__item">
-      <div>
+    <div class="authorization-form-item">
+      <div class="authorization-form__label">
         <label for="passwordAvt" >Password:</label>
       </div>
-
-      <input type="password" id="passwordAvt" placeholder="write your password " required >
+      <div class="authorization-form__input-wrapper">
+        <input  class="custom-input" type="password" id="passwordAvt" placeholder="write your password " required >
+      </div>
     </div>
-    <div class="registration-form__item">
-      <div div class="registration-form__message" id="message"></div>
+    <div class="authorization-form-item">
+      <div class="authorization-form-item__message" id="message"></div>
     </div>
-    <div class="authorization-form__item">
-      <button id="registrationBtnAvt" class="authorization-form__btn">Registration</button>
+    <div class="authorization-form-item">
+      <button class="custom-button" id="registrationBtnAvt" class="authorization-form__btn">Registration</button>
     </div>
-    <div class="authorization-form__item">
-      <button id="logInBtn" class="authorization-form__btn">Log In</button>
+    <div class="authorization-form-item">
+      <button class="custom-button" id="logInBtn" class="authorization-form__btn">Log In</button>
     </div>
   </div>
   </div>

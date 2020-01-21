@@ -1,7 +1,13 @@
 var loginAvt = document.getElementById("loginAvt");
 var passwordAvt = document.getElementById("passwordAvt");
 var logInBtn = document.getElementById("logInBtn");
-var registrationBtn = document.getElementById("registrationBtnAvt")
+var registrationBtn = document.getElementById("registrationBtnAvt");
+var massage = document.getElementById("message");
+loginAvt.onkeydown = function (e) {
+    if(!e.key.match(/[0-9A-Z]/gi)){
+        return false
+    }
+}
 var loginValue = {};
 logInBtn.addEventListener("click", getElementValue);
 registrationBtn.addEventListener("click", function () {
@@ -16,7 +22,7 @@ function getElementValue() {
     xhr.send(JSON.stringify(loginValue));
     xhr.onreadystatechange = function () {
         if (xhr.status == 401) {
-            alert("insert correct login or password")
+            massage.innerText = "Insert correct login or password!!!";
         } else {
             document.location.href = 'http://localhost:7800/index.html'
         }
