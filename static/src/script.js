@@ -9,7 +9,10 @@ var result = document.getElementById("resulttable");
 var deleteById = document.getElementById("Delete");
 var updateButton = document.getElementById("Update");
 var myAccountBtn= document.getElementById("myAccount");
-myAccountBtn.addEventListener("click", function(){document.location.href = 'http://localhost:7800/accountSettings.html'})
+var exitCabinet = document.getElementById('exitCabinet');
+myAccountBtn.addEventListener("click", function(){document.location.href = 'http://localhost:7800/accountSettings.html'});
+exitCabinet.addEventListener('click', function(){document.location.href = 'http://localhost:7800/authorization.html'});
+
 var xhr = new XMLHttpRequest();
 
 var id;
@@ -17,22 +20,22 @@ function renderTable( newStudentValue) {
     var btnUpdate;
     var btnDelete;
     var divRow = "";
+    var controlUpdateDelete = "";
 
     for (var key in newStudentValue) {
-        id = `${newStudentValue.user_id}`
-        btnDelete =  `<button id = "${newStudentValue.user_id}del"  class="btn">Delete</button>`;
-        btnUpdate = `<button id = "${newStudentValue.user_id}upd"  class="btn">Update</button>`
+        id = `${newStudentValue.user_id}`;
+        btnUpdate = `<button id = "${newStudentValue.user_id}upd"  class="btn btnUpdate">Update</button>`;
+        btnDelete =  `<button id = "${newStudentValue.user_id}del"  class="btn btnDelete">Delete</button>`;
+        controlUpdateDelete = `<div class="row_childs"> ${btnUpdate} ${btnDelete} </div>`;
         if(key === "user_id" || key === "teacher_id" ){
-            divRow +=  ""
+            divRow +=  "";
         }else {
             divRow += `<input class="row_childs" value="${newStudentValue[key]}" disabled/>`;
         }
     }
-    newStudent.innerHTML += "<div class='row ' >" + divRow  +btnUpdate + btnDelete + "</div>";
-
+    newStudent.innerHTML += "<div class='row ' >" + divRow + controlUpdateDelete + "</div>";
 
     result.append(newStudent);
-
 
 }
 function toggleBilling(arg) {
@@ -43,33 +46,43 @@ function toggleBilling(arg) {
 var allInputs;
 result.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
-    var rows = document.getElementsByClassName("row")
+    var rows = document.getElementsByClassName("row");
 
     id = parseInt(e.target.getAttribute("id"));
 
     var str = "";
 
     if(e.target.innerText === "Update"){
-       e.target.parentNode.append(ok)
-       allInputs = e.target.parentNode.getElementsByTagName("input");
-        toggleBilling(allInputs);
         var upd = document.getElementById(e.target.getAttribute("id"));
         var del = document.getElementById(`${id}del`);
-        del.style.display = "none";
-        upd.style.display = "none";
+        allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
+        console.log(allInputs);
+        if (allInputs.disable === true) {
+            del.style.display = "inline-block";
+            upd.style.display = "inline-block";
+            return;
+        }else {
+            e.target.parentNode.append(ok);
+            e.target.parentNode.append(cancel);
+            toggleBilling(allInputs);
+            del.style.display = "none";
+            upd.style.display = "none";
+        }
     } else if(e.target.innerText === "Delete") {
         deleteRow(id);
     }
 });
 
-
 var ok = document.createElement("button");
 ok.addEventListener("click", updateInfo);
 ok.innerText = "ok";
 ok.classList.add("btn");
+var cancel = document.createElement("button");
+cancel.addEventListener("click", updateInfo);
+cancel.innerText = "cancel";
+cancel.classList.add("btn");
 
 function updateInfo() {
-
     var arrValues = [];
 
     for(var key in allInputs){
@@ -78,11 +91,11 @@ function updateInfo() {
 
     var arrValuestoSend = arrValues.slice(0, -3);
     console.log(arrValuestoSend)
-     var data = {
+    var data = {
         id: id,
         username: arrValuestoSend[0],
         lastname: arrValuestoSend[1],
-         age:arrValuestoSend[2],
+        age:arrValuestoSend[2],
         city:arrValuestoSend[3]
     };
     console.log(data)
@@ -92,20 +105,15 @@ function updateInfo() {
     xhr.send(JSON.stringify(data));
     document.location.reload()
     //document.getElementsByClassName("row").innerHTML = null;
-
-
 }
 
 function createObj() {
-
     var firstTd = nameOfStudent1.value;
     var secondTd = ageOfStudent1.value;
     var thirdTd = lastNameOfStudent1.value;
     var forth = city1.value;
 
-
     var userData = {
-
         username: firstTd,
         age: secondTd,
         lastname:thirdTd,
@@ -114,10 +122,7 @@ function createObj() {
     return userData;
 }
 
-
-
 function createStudent() {
-
     var data = createObj();
 
     xhr.open("POST", "http://localhost:3000/");
@@ -132,10 +137,8 @@ function createStudent() {
 }
 
 function ready(){
-    var div = document.createElement("div");
-    document.body.append(div);
+    var div = document.getElementById("indexLoginName");
     div.innerText = localStorage.getItem("loginName");
-    div.style.color = "white";
     xhr.open("GET","http://localhost:3000/");
     xhr.send();
 
@@ -148,13 +151,10 @@ function ready(){
                 renderTable( newStudentValue[i]);
             }
         }
-    };
-
+    }
 }
 
 function deleteRow(id){
-
-
     var idstudent = id;
     var data ={
         id:id

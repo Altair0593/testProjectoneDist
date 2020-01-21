@@ -4,17 +4,45 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="shortcut icon" href="/folder-name/logo.ico">
-<!--    <link rel="stylesheet" href="css/index.css">-->
-    <link href="https://fonts.googleapis.com/css?family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+    <!--    <link rel="stylesheet" href="css/index.css">-->
 </head>
+<body>
 <div class="main-wrapper">
-    <h1 class="visual-hidden">Anonymous1 creators</h1>
+    <h1 class="visually-hidden">Anonymous creators</h1>
 </div>
 <div class="wrapper">
-    <div><dutton id="myAccount">My Account</dutton></div>
+    <div class="cabinet">
+        <div class="login-name" id="indexLoginName">Max</div>
+        <button class="authorization-form__btn" id="myAccount" type="button">My Account</button>
+        <button class="authorization-form__btn authorization-form__btn--exit" id="exitCabinet" type="button">Exit</button>
+    </div>
 
     <h2>Class list</h2>
+
+    <div class="input-wrapper">
+        <div class="input-container">
+            <label for = "Name">Name</label>
+            <input class="input-item" placeholder="Write your name" id="Name"/>
+        </div>
+        <div class="input-container">
+            <label for ="Lastname">Lastname</label>
+            <input class="input-item" placeholder="Write your lastname" id="Lastname"/>
+        </div>
+        <div class = "input-container">
+            <label for = "Age">Age</label>
+            <input class="input-item" placeholder="Write your age" id ="Age"/>
+        </div>
+        <div class = "input-container">
+            <label for = "City">City</label>
+            <input class="input-item" placeholder="Write your city" id="City"/>
+        </div>
+        <div class="control">
+            <input class="control__input" type="button" value="Create" id ="Create"/>
+        </div>
+    </div>
+
+
     <div class="testdiv"></div>
     <div id = "resulttable" class="wrapper__item">
         <div id = "resulttable1" class= "result-table">
@@ -27,35 +55,8 @@
         </div>
     </div>
 
-    <div class="input-wrapper">
 
-        <div class="input-container">
-            <label for = "Name">Name</label>
-            <input class="input-item" placeholder="Write your name" id="Name"/>
-        </div>
-        <div class="input-container">
-            <label for = "Lastname">Lastname</label>
-            <input class="input-item" placeholder="Write your lastname" id="Lastname"/>
-        </div>
-        <div class = "input-container">
-            <label for = "Age">Age</label>
-            <input class="input-item" placeholder="Wraite your age" id ="Age"/>
-        </div>
-        <div class = "input-container">
-            <label for = "City">City</label>
-            <input class="input-item" placeholder="Write your city" id="City"/>
-        </div>
-    </div>
-
-    <div class = "control">
-        <div class="control__item">
-            <input class="control__input control__input--create" type="button" value="Create" id = "Create"/>
-        </div>
-
-    </div>
 </div>
-</div>
-<!--<script src="../src/script.js"></script>-->
 </body>
 </html>
 <!-- <div class="control__item">
@@ -71,4 +72,3 @@
             <label for = "StudentId">Id</label>
             <input class="input-item" placeholder="Write your id" id="StudentId"/>
         </div>
--->
