@@ -16,27 +16,27 @@
         <div class="login-name" id="indexLoginName">Max</div>
         <button class="authorization-form__btn" id="myAccount" type="button">My Account</button>
         <button class="authorization-form__btn authorization-form__btn--exit" id="exitCabinet" type="button">Exit</button>
-        <select class="authorization-form__btn authorization-form__sel--language"><option>ru</option><option>en</option></select>
+        <select class="authorization-form__btn authorization-form__sel--language" id="selectElementLanguage"><option>en</option><option>ru</option></select>
     </div>
 </header>
 <div class="wrapper">
-    <h2>Class list</h2>
+    <h2 id="classList">Class list</h2>
 
     <div class="input-wrapper">
         <div class="input-container">
-            <label for = "Name">Name</label>
+            <label for = "Name" id="labelName">Name</label>
             <input class="input-item" placeholder="Write your name" id="Name"/>
         </div>
         <div class="input-container">
-            <label for ="Lastname">Lastname</label>
+            <label for ="Lastname" id="labelLastname">Lastname</label>
             <input class="input-item" placeholder="Write your lastname" id="Lastname"/>
         </div>
         <div class = "input-container">
-            <label for = "Age">Age</label>
+            <label for = "Age" id="labelAge">Age</label>
             <input class="input-item" placeholder="Write your age" id ="Age"/>
         </div>
         <div class = "input-container">
-            <label for = "City">City</label>
+            <label for = "City" id="labelCity">City</label>
             <input class="input-item" placeholder="Write your city" id="City"/>
         </div>
         <div class="control">
@@ -52,11 +52,11 @@
     <div id = "resulttable" class="wrapper__item">
         <div id = "resulttable1" class= "result-table">
 
-            <div class="result-table__item">Name</div>
-            <div class="result-table__item">Lastname</div>
-            <div class="result-table__item">Age</div>
-            <div class="result-table__item">City</div>
-            <div class="result-table__item">Buttons</div>
+            <div class="result-table__item" id="tableName">Name</div>
+            <div class="result-table__item" id="tableLastname">Lastname</div>
+            <div class="result-table__item" id="tableAge">Age</div>
+            <div class="result-table__item" id="tableCity">City</div>
+            <div class="result-table__item" id="tableButtons">Buttons</div>
         </div>
     </div>
 

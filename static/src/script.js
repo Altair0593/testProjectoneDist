@@ -1,3 +1,5 @@
+import { getSettings, changeLanguage, languageBox } from './indexLanguage.js'
+
 var nameOfStudent1 = document.getElementById("Name");
 var ageOfStudent1 = document.getElementById("Age");
 var lastNameOfStudent1 = document.getElementById("Lastname");
@@ -8,6 +10,7 @@ var result = document.getElementById("resulttable");
 var myAccountBtn= document.getElementById("myAccount");
 var exitCabinet = document.getElementById('exitCabinet');
 var insertGroup = document.getElementById("insertGroup");
+var selectElementLanguage=document.getElementById("selectElementLanguage");
 insertGroup.addEventListener('click', addGroup);
 
 createButton.addEventListener("click", createStudent);
@@ -17,6 +20,7 @@ myAccountBtn.addEventListener("click", function(){
 exitCabinet.addEventListener('click', function(){
     document.location.href = 'http://localhost:7800/authorization.html'
 });
+selectElementLanguage.addEventListener("click", changeLanguage);
 var localhostServ = "http://localhost:3000";
 var xhr = new XMLHttpRequest();
 var id;
@@ -31,7 +35,10 @@ cancel.classList.add("btn");
 cancel.addEventListener("click", function () {
     document.location.reload()
 });
-
+main();
+function main(){
+    changeLanguage();
+}
 function renderTable( newStudentValue) {
     var btnUpdate;
     var btnDelete;

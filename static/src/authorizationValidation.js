@@ -1,12 +1,19 @@
+import { getSettings, changeLanguage, languageBox } from './autorizationLanguage.js'
 var loginAvt = document.getElementById("loginAvt");
 var passwordAvt = document.getElementById("passwordAvt");
 var logInBtn = document.getElementById("logInBtn");
 var registrationBtn = document.getElementById("registrationBtnAvt");
 var massage = document.getElementById("message");
+var selectElementLanguage=document.getElementById("selectElementLanguage");
+selectElementLanguage.addEventListener("click", changeLanguage);
 loginAvt.onkeydown = function (e) {
     if(!e.key.match(/[0-9A-Z]/gi)){
         return false
     }
+};
+main();
+function main(){
+    changeLanguage();
 }
 var loginValue = {};
 logInBtn.addEventListener("click", getElementValue);
