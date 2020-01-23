@@ -10,7 +10,7 @@ const client = new Client({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: 'postgres',
+    password: '0000',
     port: 5432,
 });
 
@@ -33,6 +33,7 @@ var port = 3000;
 
 var authorizated;
 var teacherId;
+var groupId;
 app.post("/authorization", function (req, res) {
 
     var user = {
@@ -90,18 +91,17 @@ app.post("/registration", function (req, res) {
 
 });
 app.get("/", function (req, res) {
-
-    client.query(`SELECT * FROM students WHERE teacher_id = '${teacherId}' ORDER BY user_id ;`, [], function (err, result) {
+    console.log(`${groupId}`);
+    var gid = 9
+    client.query(`SELECT * FROM students WHERE groups_id = ${gid} ORDER BY user_id;`, [], function (err, result) {
+        // console.log(result.rows);
         res.json(result.rows);
-
     });
-
 });
 
 app.get("/accountSetting", function (req, res) {
 
     client.query(`SELECT * FROM teachers WHERE user_id = '${teacherId}';`, [], function (err, result) {
-
         console.log(result.rows);
         res.json(result.rows);
 
@@ -109,18 +109,40 @@ app.get("/accountSetting", function (req, res) {
 
 });
 
-app.post("/", function (req, res) {
-    console.log(req.body)
-    var user = {
+app.post("/groups", function (req, res) {
+    console.log(req.body.groupName);
+    console.log(`${teacherId}`);
 
+    var newGroup = `INSERT INTO groups(groupname, teacher_id) VALUES 
+    ('${req.body.groupName}', ${teacherId})`;
+    client.query(newGroup, [],
+        function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(result.rows);
+
+        });
+    client.query(`SELECT * FROM groups WHERE teacher_id = '${teacherId}';`, [], function (err, result) {
+        console.log(result.rows);
+        for (var key in result.rows) {
+            groupId = result.rows[key].user_id;
+        }})
+    });
+
+app.post("/", function (req, res) {
+    // console.log(req.body)
+    console.log(`${groupId}`);
+
+    var user = {
         username: req.body.username,
         age: req.body.age,
         lastname: req.body.lastname,
         city: req.body.city
     };
 //server.js
-    var newUser = `INSERT INTO students( firstname, lastname, age, city, teacher_id) VALUES 
-    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${teacherId}')`;
+    var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES 
+    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${groupId})`;
     client.query(newUser, [],
         function (err, result) {
             if (err) {

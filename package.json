@@ -30,7 +30,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "build": "webpack --mode development",
-    "start:dev": "webpack-dev-server --open"
+    "start:dev": "webpack-dev-server --open development"
   },
   "repository": {
     "type": "git",

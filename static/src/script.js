@@ -7,6 +7,9 @@ var newStudent = document.createElement("div");
 var result = document.getElementById("resulttable");
 var myAccountBtn= document.getElementById("myAccount");
 var exitCabinet = document.getElementById('exitCabinet');
+var insertGroup = document.getElementById("insertGroup");
+insertGroup.addEventListener('click', addGroup);
+
 createButton.addEventListener("click", createStudent);
 myAccountBtn.addEventListener("click", function(){
     document.location.href = 'http://localhost:7800/accountSettings.html'
@@ -55,6 +58,19 @@ function toggleBilling(arg) {
     for (var i = 0; i < arg.length; i++) {
         arg[i].disabled = !arg[i].disabled;
     }
+}
+
+function addGroup() {
+    xhr.open("POST", `${localhostServ}/groups`);
+    var data = {groupName: insertGroup.value};
+    console.log(data);
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send(JSON.stringify(data));
+
+    xhr.onerror = function(){
+        // alert("server error");
+    };
+    // document.location.reload()
 }
 
 result.addEventListener("click", function (e) {
@@ -150,7 +166,7 @@ function ready(){
             alert("insert correct login or password")
         }else{
             var newStudentValue = JSON.parse(this.response);
-            for (let i = 0; i < newStudentValue.length ; i++) {
+            for (let i = 0; i < newStudentValue.length; i++) {
                 renderTable( newStudentValue[i]);
             }
         }
