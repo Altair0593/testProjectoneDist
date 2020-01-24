@@ -191,15 +191,16 @@ function getStudents(e) {
 
     if (e.target.tagName !== "input" && e.target.id == "insertGroup") return;
 
-    if (e.target.classList.contains("toggle-students")) {
         var data = {
             name: e.target.getAttribute("id")
         };
         var xhr = new XMLHttpRequest();
         e.target.style.backgroundColor = "purple";
+        e.target.style.color = "white";
         xhr.open("POST", `${localhostServ}/groupStudent`);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.send(JSON.stringify(data));
+
 
         xhr.onload = function () {
             if (xhr.status == 401) {
@@ -211,17 +212,14 @@ function getStudents(e) {
                 }
             }
         };
-        e.target.classList.remove("toggle-students");
-    } else {
-        var div = document.getElementsByClassName("row_childs");
-        console.log(div);
         var row = document.getElementById("row");
-        e.target.style.backgroundColor = "blue";
 
-        if(row === null) return false;
-        row.parentNode.innerHTML = null;
-        e.target.classList.add("toggle-students")
-    }
+        if(row === null) {
+            return false;
+        }   else {
+            row.parentNode.innerHTML = null;
+        }
+
 }
 
 
