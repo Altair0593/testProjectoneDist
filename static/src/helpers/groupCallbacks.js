@@ -1,4 +1,4 @@
-export {renderGroup, inputEnebled, postRequestGroup}
+export {renderGroup, inputEnebled, postRequestGroup, createObj, localhostServ}
 var localhostServ = "http://localhost:3000";
 function renderGroup () {
     var allroups = document.getElementsByClassName("group-wrapper__item");
@@ -16,10 +16,34 @@ function renderGroup () {
     newGroup.append(inputGroup)
 }
 
+
 function inputEnebled(e) {
    if(e.target.tagName !== "INPUT") return;
     e.target.removeAttribute("disabled");
 }
+
+
+function createObj() {
+    var nameOfStudent1 = document.getElementById("Name");
+    var ageOfStudent1 = document.getElementById("Age");
+    var lastNameOfStudent1 = document.getElementById("Lastname");
+    var city1 = document.getElementById("City");
+    var group = document.getElementById("Group")
+    var userData = {
+        username:  nameOfStudent1.value,
+        age: ageOfStudent1.value,
+        lastname:lastNameOfStudent1.value,
+        city:city1.value,
+        group:group.value
+    };
+    if(userData.username === "" || userData.lastname === "" || userData.age === "" ||
+        userData.city === ""|| userData.group === ""){
+        return false
+    } else {
+        return userData;
+    }
+}
+
 
 function postRequestGroup() {
 
@@ -34,14 +58,10 @@ function postRequestGroup() {
 
     xhr.onload = function () {
             var newStudentValue = JSON.parse(this.response);
-            console.log(newStudentValue)
-            // for (let i = 0; i < newStudentValue.length; i++) {
-            //     renderTable( newStudentValue[i]);
-            // }
 
     }
-    insertGroup.setAttribute("disabled","true")
+    insertGroup.setAttribute("disabled","true");
     xhr.onerror = function(){
-        // alert("server error");
+         alert("server error");
     };
 }

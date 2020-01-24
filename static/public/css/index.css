@@ -29,7 +29,6 @@ body {
   height: 100px;
   display: flex;
   justify-content: flex-end;
-  color: white;
 }
 .group-wrapper {
   display: flex;

@@ -83,5 +83,6 @@ module.exports = {
     devServer: {
         contentBase: __dirname + './dist',
         port: 7800,
+        index: 'authorization.html'
     }
 }

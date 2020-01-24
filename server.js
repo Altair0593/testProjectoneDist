@@ -1,3 +1,5 @@
+let helpGroupApp = require("./static/src/helpers/groupRequests")
+
 var express = require("express");
 var app = express();
 var path = require("path");
@@ -16,25 +18,22 @@ const client = new Client({
 
 
 client.connect(function (err) {
-    //if (err) throw err;
     console.log("Connected!");
 });
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(function(req, res, next) {
-    //console.log("USE");
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-var port = 3000;
+
 
 
 var authorizated;
 var teacherId;
-var groupId;
-var groupid;
+
 app.post("/authorization", function (req, res) {
 
     var user = {
@@ -61,8 +60,6 @@ app.post("/authorization", function (req, res) {
             res.status(401).send('Unauthorized ');
 
         }
-
-
     });
 });
 
@@ -91,30 +88,10 @@ app.post("/registration", function (req, res) {
     });
 
 });
-app.get("/", function (req, res) {
-    console.log(`${groupId}`);
-    var gid = 9
-    client.query(`SELECT * FROM students WHERE groups_id = ${gid} ORDER BY user_id;`, [], function (err, result) {
-        // console.log(result.rows);
-        res.json(result.rows);
-    });
-});
-app.post("/groupStudent", function (req, res) {
-    var userId = +req.body.name
-    console.log(userId)
-    client.query(`SELECT * FROM students WHERE groups_id = ${userId} ORDER BY user_id;`, [], function (err, result) {
-        // console.log(result.rows);
-        res.json(result.rows);
-    });
-});
 
-app.get("/getAllGroups", function (req, res) {
+app.post("/groupStudent", helpGroupApp.getGroupOfStudents);
 
-    client.query(`SELECT * FROM groups;`, [], function (err, result) {
-
-        res.json(result.rows);
-    });
-});
+app.get("/getAllGroups", helpGroupApp.getAllGroups);
 
 app.get("/accountSetting", function (req, res) {
 
@@ -127,9 +104,8 @@ app.get("/accountSetting", function (req, res) {
 });
 
 app.post("/groups", function (req, res) {
-    console.log(req.body.groupName);
-    console.log(`${teacherId}`);
 
+    var groupId;
     var newGroup = `INSERT INTO groups(groupname, teacher_id) VALUES 
     ('${req.body.groupName}', ${teacherId})`;
     client.query(newGroup, [],
@@ -152,7 +128,7 @@ app.post("/groups", function (req, res) {
 
 app.post("/", async function (req, res) {
 
-    console.log(req.body)
+    var groupid;
     var user = {
         username: req.body.username,
         age: req.body.age,
@@ -163,8 +139,6 @@ app.post("/", async function (req, res) {
     const {rows} = await client.query(`SELECT * FROM groups WHERE groupname = '${user.group}';`, []);
      groupid = rows[0].user_id;
 
-
-        console.log(groupid)
         var newUser = `INSERT INTO students( firstname, lastname, age, city, group_name, groups_id) VALUES
     ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${user.city}', ${groupid})`;
         client.query(newUser, [],
@@ -178,33 +152,11 @@ app.post("/", async function (req, res) {
 });
 
 
-// app.post("/", function (req, res) {
-//     // console.log(req.body)
-//     console.log(`${groupId}`);
-//
-//     var user = {
-//         username: req.body.username,
-//         age: req.body.age,
-//         lastname: req.body.lastname,
-//         city: req.body.city
-//     };
-// //server.js
-//     var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES
-//     ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${groupId})`;
-//     client.query(newUser, [],
-//         function (err, result) {
-//             if (err) {
-//                 console.log(err);
-//             }
-//             console.log(result);
-//         });
-// });
 
 app.post("/update", function (req, res) {
     var userID = {
         id: req.body.id
     };
-    console.log(req.body, userID.id)
     var queryColomn = [
         "firstname",
         "lastname",
@@ -261,8 +213,8 @@ app.post("/delete", function (req, res) {
     });
 });
 
-app.listen(port, function () {
-    console.log("port: " + port)
+app.listen(helpGroupApp.port, function () {
+    console.log("port: " + helpGroupApp.port)
 });
 
 
