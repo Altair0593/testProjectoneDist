@@ -5,7 +5,7 @@ var logInBtn = document.getElementById("logInBtn");
 var registrationBtn = document.getElementById("registrationBtnAvt");
 var massage = document.getElementById("message");
 var selectElementLanguage=document.getElementById("selectElementLanguage");
-selectElementLanguage.addEventListener("click", changeLanguage);
+selectElementLanguage.onchange = changeLanguage;
 loginAvt.onkeydown = function (e) {
     if(!e.key.match(/[0-9A-Z]/gi)){
         return false

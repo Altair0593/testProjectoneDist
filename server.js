@@ -10,7 +10,7 @@ const client = new Client({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: '0000',
+    password: 'postgres',
     port: 5432,
 });
 
@@ -34,6 +34,7 @@ var port = 3000;
 var authorizated;
 var teacherId;
 var groupId;
+var groupid;
 app.post("/authorization", function (req, res) {
 
     var user = {
@@ -98,6 +99,22 @@ app.get("/", function (req, res) {
         res.json(result.rows);
     });
 });
+app.post("/groupStudent", function (req, res) {
+    var userId = +req.body.name
+    console.log(userId)
+    client.query(`SELECT * FROM students WHERE groups_id = ${userId} ORDER BY user_id;`, [], function (err, result) {
+        // console.log(result.rows);
+        res.json(result.rows);
+    });
+});
+
+app.get("/getAllGroups", function (req, res) {
+
+    client.query(`SELECT * FROM groups;`, [], function (err, result) {
+
+        res.json(result.rows);
+    });
+});
 
 app.get("/accountSetting", function (req, res) {
 
@@ -128,29 +145,60 @@ app.post("/groups", function (req, res) {
         for (var key in result.rows) {
             groupId = result.rows[key].user_id;
         }})
+        res.send(groupId)
     });
 
-app.post("/", function (req, res) {
-    // console.log(req.body)
-    console.log(`${groupId}`);
 
+
+app.post("/", async function (req, res) {
+
+    console.log(req.body)
     var user = {
         username: req.body.username,
         age: req.body.age,
         lastname: req.body.lastname,
-        city: req.body.city
+        city: req.body.city,
+        group: req.body.group
     };
-//server.js
-    var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES 
-    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${groupId})`;
-    client.query(newUser, [],
-        function (err, result) {
-            if (err) {
-                console.log(err);
-            }
-            console.log(result);
-        });
+    const {rows} = await client.query(`SELECT * FROM groups WHERE groupname = '${user.group}';`, []);
+     groupid = rows[0].user_id;
+
+
+        console.log(groupid)
+        var newUser = `INSERT INTO students( firstname, lastname, age, city, group_name, groups_id) VALUES
+    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${user.city}', ${groupid})`;
+        client.query(newUser, [],
+            function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(result);
+            })
+
 });
+
+
+// app.post("/", function (req, res) {
+//     // console.log(req.body)
+//     console.log(`${groupId}`);
+//
+//     var user = {
+//         username: req.body.username,
+//         age: req.body.age,
+//         lastname: req.body.lastname,
+//         city: req.body.city
+//     };
+// //server.js
+//     var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES
+//     ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${groupId})`;
+//     client.query(newUser, [],
+//         function (err, result) {
+//             if (err) {
+//                 console.log(err);
+//             }
+//             console.log(result);
+//         });
+// });
 
 app.post("/update", function (req, res) {
     var userID = {

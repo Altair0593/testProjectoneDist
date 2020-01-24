@@ -31,10 +31,20 @@ body {
   margin: auto;
 }
 .header{
-  background-color: rgba(80,80,80,0.7);
+
   height: 100px;
   display: flex;
   justify-content: flex-end;
+  color: white;
+}
+.group-wrapper{
+  display: flex;
+
+  &__item{
+    display: flex;
+    align-items: baseline;
+
+  }
 }
 .authorization-form__btn {
   padding: @padding5px;
@@ -45,6 +55,7 @@ body {
   font-size: 15px;
   transition-duration: 0.4s;
   cursor: pointer;
+  outline: none;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 
   margin: 0 5px;
@@ -156,7 +167,7 @@ body {
   font-family: 'Alata', sans-serif;
   display: flex;
   flex-direction: column;
-  width: calc(100% / 5.3);
+  width: calc(100% / 6.5);
   margin: 0 5px;
 
   &label {

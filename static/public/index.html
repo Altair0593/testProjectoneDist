@@ -13,7 +13,7 @@
 </div>
 <header class="header">
     <div class="header__cabinet cabinet">
-        <div class="login-name" id="indexLoginName">Max</div>
+        <div class="login-name" id="indexLoginName"></div>
         <button class="authorization-form__btn" id="myAccount" type="button">My Account</button>
         <button class="authorization-form__btn authorization-form__btn--exit" id="exitCabinet" type="button">Exit</button>
         <select class="authorization-form__btn authorization-form__sel--language" id="selectElementLanguage"><option>en</option><option>ru</option></select>
@@ -39,6 +39,10 @@
             <label for = "City" id="labelCity">City</label>
             <input class="input-item" placeholder="Write your city" id="City"/>
         </div>
+        <div class = "input-container">
+            <label for = "City" id="Groupname">Group</label>
+            <input class="input-item" placeholder="Write group name" id="Group"/>
+        </div>
         <div class="control">
             <input class="control__input" type="button" value="Create" id ="Create"/>
         </div>
@@ -46,8 +50,15 @@
 
 
     <div class="testdiv"></div>
-    <div class="">
-        <input id="insertGroup" value="JS">
+    <div class="group-wrapper" id="group-wrapper">
+        <div class="group-wrapper__item">
+            <div class="input-wrapper row " id = "wrap-group">
+                <input id="insertGroup" value="untitled" class="input-item" disabled>
+            </div>
+            <div class="group-btn">
+                <button class="btn" id="add-group">+</button>
+            </div>
+        </div>
     </div>
     <div id = "resulttable" class="wrapper__item">
         <div id = "resulttable1" class= "result-table">
