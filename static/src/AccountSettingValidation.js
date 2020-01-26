@@ -1,7 +1,18 @@
+import { getSettings, changeLanguage, languageBox } from './autorizationLanguage.js'
+
+let aboutMyself = document.getElementById("aboutMyself");
+aboutMyself.addEventListener('keydown', checkCurrentLengthText);
+let aboutMyselfCounter = 150;
+let textAreaCount = document.getElementById("textAreaCount");
+
 let teacher = getUserData();
 setTimeout(fillInput, 800);
+
 let SaveBtn = document.getElementById("SaveBtn");
 SaveBtn.addEventListener("click", getValidation);
+
+let closeBtn = document.getElementById("close");
+closeBtn.addEventListener('click',() => {document.location.href = 'http://localhost:7800/index.html'});
 
 function getUserData() {
     let xhr = new XMLHttpRequest();
@@ -12,7 +23,7 @@ function getUserData() {
         teacher = JSON.parse(this.response);
         console.log(teacher);
     };
-};
+}
 
 function fillInput() {
     document.getElementById("login").value = teacher[0].login;
@@ -20,6 +31,8 @@ function fillInput() {
     document.getElementById("password1").value = teacher[0].password;
     document.getElementById("password2").value = teacher[0].password;
     document.getElementById("phone").value = teacher[0].phone_number;
+    document.getElementById("aboutMyself").value = teacher[0].about_myself;
+    // document.getElementById("teacherIcon").src = teacher[0].teacher_icon;
 }
 
 let err = "";
@@ -28,27 +41,27 @@ let User = function () {
     this.password = document.getElementById("password1").value;
     this.password2 = document.getElementById("password2").value;
     this.email = document.getElementById("email").value;
-    this.phone = document.getElementById("phone").value.replace(/[+()-\s]/g, '');
-    this.user_id= teacher[0].user_id;
-}
+    this.phone = document.getElementById("phone").value.replace(/[+()-/\s]/g, '');
+    this.aboutMyself = document.getElementById("aboutMyself").value;
+    this.teachers_id = teacher[0].teachers_id;
+    // this.icon =  document.getElementById("icon").value;
+};
 
 function getValidation() {
     let elementValue = new User();
     let message = document.getElementById("message");
-    console.log(elementValue);
     if (checkEmail(elementValue.email) && checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "380")) {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "http://localhost:3000/accountupdate");
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.send(JSON.stringify(elementValue));
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(elementValue));
         message.innerHTML = "Changes included";
+        console.log(elementValue);
         setTimeout(document.location.href = 'http://localhost:7800/authorization.html', 1500);
-       
     } else {
         message.innerHTML = err;
-    };
+    }
 }
-
 
 function checklogin(login) {
     if (login.length < 1 || !isNaN(Number(login[0]))) {
@@ -67,7 +80,7 @@ function checkPass(pass1, pass2) {
 }
 
 function checkPhone(phone, countriCode) {
-    if (phone.length !== 12 || phone.substring(0, 3) != countriCode) {
+    if (phone.length !== 12 || phone.substring(0, 3) !== countriCode) {
         err = "Некорректныйтелефон";
         return false;
     }
@@ -81,6 +94,15 @@ function checkEmail(email) {
         }
 
     }
-    err = "Некорректный e-mail"
+    err = "Некорректный e-mail";
     return false;
 }
+
+function checkCurrentLengthText() {
+    if (aboutMyself.value.length > 150) {
+        return;
+    }
+   textAreaCount.innerText =  String(aboutMyselfCounter - aboutMyself.value.length);
+}
+
+import "../public/css/accountSettings.less"

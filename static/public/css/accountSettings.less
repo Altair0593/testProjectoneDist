@@ -1,0 +1,64 @@
+@import "helpers/helpersAuthorization";
+@import "helpers/helperAccountSettings";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-image: @backgroundWrapper;
+  height: @wrapperHeight;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.main-wrapper {
+  ;
+  font-family: 'Alata', sans-serif;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.account-settings__title {
+  text-align: @alignCenter;
+}
+
+.account-settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+&-form__item {
+  margin: 5px 0;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+  &__item {
+    width: 50%;
+  }
+}
+
+.account--form {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+}
+
+.control-button {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-button--close {
+  background-color: rgba(255, 246, 246, 0.71);
+}
+
+.custom-input--text-area {
+  resize: both;
+  overflow: auto;
+}

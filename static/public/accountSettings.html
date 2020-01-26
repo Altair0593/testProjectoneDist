@@ -2,43 +2,87 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>My account</title>
+  <link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main class="wrapper">
-    <div class="close">
-      <button class="close__btn" id="close">Close</button>
-    </div>
-    <h1 class="account-settings__title">Account settings</h1>
-    <div class="account-settings-form" action="">
-      <div class="account-settings-form__item">
-        <label for="login">New Login</label>
-        <input type="text" id="login">
-      </div>
-      <div class="account-settings-form__item">
-        <label for="password1">New Password</label>
-        <input type="password" id="password1">
-      </div>
-      <div class="account-settings-form__item">
-        <label for="password2">Check password</label>
-        <input type="password" id="password2">
-      </div>
-      <div class="account-settings-form__item">
-        <label for="email">New Email</label>
-        <input type="email" id="email">
-      </div>
-      <div class="account-settings-form__item">
-        <label for="phone">New Phone</label>
-        <input type="tel" id="phone">
-      </div>
-      <div class="account-settings-form__item">
-      <div div class="account-settings-form__message" id="message"></div>
-      </div>
-      <div class="account-settings-form__item">
-        <button id="SaveBtn" class="account-settings-form__btn">Save changes</button>
-      </div>
-    </div>
-  </main>
+<main class="container">
+    <div class="main-wrapper">
+      <header class="header">
+        <div class="header__cabinet cabinet">
+          <div class="header__cabinet cabinet">
+            <select class="custom-button authorization-form__sel--language" id="selectElementLanguage"><option>en</option><option>ru</option></select>
+          </div>
+        </div>
+      </header>
+      <h1 class="account-settings__title">My account</h1>
+
+      <div class="account-settings">
+        <div class="account--form">
+
+            <div class="account-settings-form__item">
+              <img src="" alt="My avatar" id="teacherIcon">
+            </div>
+
+            <div class="account-settings-form__item">
+              <label for="icon" class="account-label">Change your icon</label>
+              <input type="file"  class= "visually-hidden" id="icon" value="Change our icon">
+            </div>
+
+            <div class="account-settings-form__item">
+              <label class="account-label" for="login">New Login</label>
+              <input class="custom-input" type="text" id="login">
+            </div>
+
+            <div class="account-settings-form__item">
+              <label class="account-label" for="password1">New Password</label>
+              <input class="custom-input" type="password" id="password1">
+            </div>
+
+            <div class="account-settings-form__item">
+              <label class="account-label" for="password2">Check password</label>
+              <input class="custom-input" type="password" id="password2">
+            </div>
+
+            <div class="account-settings-form__item">
+              <label class="account-label" for="email">New Email</label>
+              <input class="custom-input" type="email" id="email">
+            </div>
+
+            <div class="account-settings-form__item">
+              <label class="account-label" for="phone">New Phone</label>
+              <input class="custom-input" type="tel" id="phone">
+            </div>
+
+            <div class="account-settings-form__item">
+              <div class=" account-label account-settings-form__message" id="message"></div>
+            </div>
+        </div>
+
+          <div class ="account--form about-myself">
+            <label for = "aboutMyself">About Myself</label>
+            <textarea class = "custom-input custom-input--text-area" id="aboutMyself" rows="5" maxlength="150">
+
+            </textarea>
+            <span class="about-myself__length" id="textAreaCount">150</span>
+          </div>
+        </div>
+
+
+        <div class="control-button">
+          <div>
+            <button  id="SaveBtn" class="custom-button">Save changes</button>
+          </div>
+          <div class="close">
+            <button class="custom-button custom-button--close" id="close" >close</button>
+          </div>
+        </div>
+
+
+
+
+</div>
+</div>
 <script type="module" src="../src/AccountSettingValidation.js"></script>
 </body>
 </html>

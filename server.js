@@ -49,7 +49,7 @@ app.post("/authorization", function (req, res) {
 
             baseLogin = result.rows[key].login;
             basePassword = result.rows[key].password;
-            teacherId = result.rows[key].user_id;
+            teacherId = result.rows[key].teachers_id;
 
         }
         if (baseLogin === `${user.login}` && basePassword === `${user.password}`) {
@@ -95,10 +95,9 @@ app.get("/getAllGroups", helpGroupApp.getAllGroups);
 
 app.get("/accountSetting", function (req, res) {
 
-    client.query(`SELECT * FROM teachers WHERE user_id = '${teacherId}';`, [], function (err, result) {
+    client.query(`SELECT * FROM teachers WHERE teachers_id = '${teacherId}';`, [], function (err, result) {
         console.log(result.rows);
         res.json(result.rows);
-
     });
 
 });
@@ -219,14 +218,16 @@ app.listen(helpGroupApp.port, function () {
 
 
 app.post("/accountupdate", function (req, res) {
-    var userID = {
-        id: req.body.user_id
+    var teacherId = {
+        id: req.body.teachers_id
     };
-    var queryColomn = [
+    var teachersSqlColumn = [
         "login",
-        "email",
         "password",
-        "phone_number"
+        "email",
+        "phone_number",
+        "about_myself",
+         // "teacher_icon"
     ];
 
     var queryComand = "";
@@ -236,9 +237,11 @@ app.post("/accountupdate", function (req, res) {
 
     var user = {
         login: req.body.login,
-        email: req.body.email,
         password: req.body.password,
-        phone_number: req.body.phone
+        email: req.body.email,
+        phone_number: req.body.phone,
+        about_myself: req.body.aboutMyself,
+        // teacher_icon: req.body.teacher_icon
     };
 
     var upgradeSQL = [];
@@ -247,7 +250,7 @@ app.post("/accountupdate", function (req, res) {
         if (!(this[key].length === 0)) {
             upgradeSQL.push(`${this[key]}`);
             // if ()
-            queryComand += queryColomn[valueCounter] + "= $" + counterLink + ",";
+            queryComand += teachersSqlColumn[valueCounter] + "= $" + counterLink + ",";
 
             counterLink++
         }
@@ -255,16 +258,16 @@ app.post("/accountupdate", function (req, res) {
     }, user);
 
     queryComand = queryComand.substring(0, queryComand.length - 1);
-    console.log(upgradeSQL, queryComand);
+    console.log(teacherId.id , upgradeSQL, queryComand);
 
-    client.query(`UPDATE teachers SET ${queryComand} WHERE user_id = ${userID.id}`,
-        upgradeSQL,
-        function (err, result) {
-            if (err) {
-                console.log(err);
-            }
-            console.log(result);
-        });
+    client.query(`UPDATE teachers SET ${queryComand} WHERE teachers_id = ${teacherId.id}`,
+         upgradeSQL,
+         function (err, result) {
+             if (err) {
+                 console.log(err);
+             }
+             console.log(result);
+         });
 });
 
 // const webpack = require('webpack');

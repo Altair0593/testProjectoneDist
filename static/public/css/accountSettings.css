@@ -1,0 +1,90 @@
+.custom-button {
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  font-size: 15px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.custom-button:hover {
+  background-color: #4CAF50;
+  color: #fff;
+}
+.custom-input {
+  padding: 7px;
+  border: none;
+  opacity: 0.7;
+  outline: none;
+  border-bottom: 2px solid #3399ff;
+  transition-duration: 0.8s;
+}
+.custom-input:focus {
+  background-color: #4CAF50;
+  color: white;
+  border-bottom: 2px solid #9900cc;
+}
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+.container {
+  background-image: radial-gradient(circle, #cbd250, #61c977, #00b6a5, #009bbf, #247bb5);
+  height: 100vh;
+}
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+.main-wrapper {
+  font-family: 'Alata', sans-serif;
+  margin: 0 auto;
+  max-width: 800px;
+}
+.account-settings__title {
+  text-align: center;
+}
+.account-settings {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.account-settings-form__item {
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.account-settings__item {
+  width: 50%;
+}
+.account--form {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+}
+.control-button {
+  display: flex;
+  justify-content: center;
+}
+.custom-button--close {
+  background-color: rgba(255, 246, 246, 0.71);
+}
+.custom-input--text-area {
+  resize: both;
+  overflow: auto;
+}
+/*# sourceMappingURL=accountSettings.css.map */
