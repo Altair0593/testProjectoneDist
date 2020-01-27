@@ -22,8 +22,8 @@ function getGroupOfStudents (req, res) {
 }
 
 function getAllGroups(req, res) {
-
-    client.query(`SELECT * FROM groups;`, [], function (err, result) {
+    console.log(req.body.teachers_id)
+    client.query(`SELECT * FROM groups WHERE teacher_id = ${req.body.teachers_id};`, [], function (err, result) {
 
         res.json(result.rows);
     });

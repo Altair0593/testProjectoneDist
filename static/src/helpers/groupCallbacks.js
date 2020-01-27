@@ -1,4 +1,4 @@
-export {renderGroup, inputEnebled, postRequestGroup, createObj, localhostServ}
+export {renderGroup, inputEnebled, postRequestGroup, localhostServ}
 var localhostServ = "http://localhost:3000";
 function renderGroup () {
     var allroups = document.getElementsByClassName("group-wrapper__item");
@@ -13,7 +13,9 @@ function renderGroup () {
     inputGroup.setAttribute("disabled","true");
     inputGroup.value = insertGroup.value;
     relativeDiv.prepend(newGroup);
-    newGroup.append(inputGroup)
+    newGroup.append(inputGroup);
+    postRequestGroup();
+
 }
 
 
@@ -23,45 +25,28 @@ function inputEnebled(e) {
 }
 
 
-function createObj() {
-    var nameOfStudent1 = document.getElementById("Name");
-    var ageOfStudent1 = document.getElementById("Age");
-    var lastNameOfStudent1 = document.getElementById("Lastname");
-    var city1 = document.getElementById("City");
-    var group = document.getElementById("Group")
-    var userData = {
-        username:  nameOfStudent1.value,
-        age: ageOfStudent1.value,
-        lastname:lastNameOfStudent1.value,
-        city:city1.value,
-        group:group.value
-    };
-    if(userData.username === "" || userData.lastname === "" || userData.age === "" ||
-        userData.city === ""|| userData.group === ""){
-        return false
-    } else {
-        return userData;
-    }
-}
+
 
 
 function postRequestGroup() {
 
 
     var xhr = new XMLHttpRequest();
+    var insertGroup = document.getElementById("insertGroup");
 
     xhr.open("POST", `${localhostServ}/groups`);
-    var data = {groupName: insertGroup.value};
-    console.log(data);
+    var data = {groupName: insertGroup.value, teachers_id: localStorage.getItem("teachers_id")};
+
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
 
     xhr.onload = function () {
-            var newStudentValue = JSON.parse(this.response);
+            var newStudentValue = this.response;
+            console.log(newStudentValue)
 
     }
     insertGroup.setAttribute("disabled","true");
     xhr.onerror = function(){
-         alert("server error");
+         console.log("server error");
     };
 }

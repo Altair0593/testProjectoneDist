@@ -30,6 +30,9 @@ body {
   display: flex;
   justify-content: flex-end;
 }
+.active {
+  background: pink;
+}
 .group-wrapper {
   display: flex;
 }

@@ -1,5 +1,5 @@
 import { getSettings, changeLanguage, languageBox } from './indexLanguage.js';
-import {renderGroup, inputEnebled, postRequestGroup, createObj, localhostServ} from "./helpers/groupCallbacks";
+import {renderGroup, inputEnebled, postRequestGroup, localhostServ} from "./helpers/groupCallbacks";
 
 
 var createButton = document.getElementById("Create");
@@ -14,7 +14,7 @@ var wrapGroup = document.getElementById("wrap-group");
 wrapGroup.addEventListener("dblclick", inputEnebled);
 var addGroupBtn = document.getElementById("add-group");
 addGroupBtn.addEventListener("click", renderGroup);
-addGroupBtn.addEventListener('click', postRequestGroup);
+//addGroupBtn.addEventListener('click', postRequestGroup);
 
 var wrapGroups = document.getElementById("group-wrapper");
 wrapGroups.addEventListener("click", getStudents);
@@ -25,6 +25,7 @@ myAccountBtn.addEventListener("click", function(){
     document.location.href = 'http://localhost:7800/accountSettings.html'
 });
 exitCabinet.addEventListener('click', function(){
+    localStorage.clear()
     document.location.href = 'http://localhost:7800/authorization.html'
 });
 selectElementLanguage.onchange = changeLanguage;
@@ -81,7 +82,7 @@ result.addEventListener("click", function (e) {
             upd.style.display = "none";
         }
     } else if(e.target.innerText === "Delete") {
-        deleteRow(id);
+        deleteRow(e.target);
     }
 });
 
@@ -111,6 +112,7 @@ function updateInfo() {
 
 function createStudent() {
     var data = createObj();
+    console.log(data)
     if(!data)return;
     console.log(data)
     xhr.open("POST", `${localhostServ}`);
@@ -124,7 +126,27 @@ function createStudent() {
     document.location.reload()
 }
 
-function deleteRow(id){
+function createObj() {
+    var nameOfStudent1 = document.getElementById("Name");
+    var ageOfStudent1 = document.getElementById("Age");
+    var lastNameOfStudent1 = document.getElementById("Lastname");
+    var city1 = document.getElementById("City");
+    var group = document.getElementById("Group")
+    var userData = {
+        username:  nameOfStudent1.value,
+        age: ageOfStudent1.value,
+        lastname:lastNameOfStudent1.value,
+        city:city1.value,
+        groups_id:eventGroupId
+    };
+    if(userData.username === "" || userData.lastname === "" || userData.age === "" ||
+        userData.city === ""|| userData.groups_id === undefined){
+        return false
+    } else {
+        return userData;
+    }
+}
+function deleteRow(e){
     var idstudent = id;
     var data ={
         id:id
@@ -133,18 +155,31 @@ function deleteRow(id){
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
 
-    document.location.reload()
+    xhr.onload = function(){
+        console.log(xhr.statusText)
+        if(xhr.status !== 404){
+            e.parentNode.parentNode.innerHTML = null
+        }
+    }
+    //document.location.reload()
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (e) {
+    //if(e.target.classList.contains("input-item"))return false
+       var data =  {
+           teachers_id: localStorage.getItem("teachers_id")
+    }
+    console.log(data)
     var div = document.getElementById("indexLoginName");
     div.innerText = localStorage.getItem("loginName");
-    xhr.open("GET",`${localhostServ}/getAllGroups`);
-    xhr.send();
+    xhr.open("POST",`${localhostServ}/getAllGroups`)
+    xhr.setRequestHeader("Content-type", "application/json");;
+    xhr.send(JSON.stringify(data));
 
     xhr.onload = function () {
 
+        console.log(JSON.parse(this.response))
             var newStudentValue = JSON.parse(this.response);
             for (let i = 0; i < newStudentValue.length; i++) {
                 var allroups = document.getElementsByClassName("group-wrapper__item");
@@ -157,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 var inputGroup = document.createElement("input");
                 inputGroup.setAttribute("class", "toggle-students input-item");
                 inputGroup.setAttribute("disabled","true");
-                inputGroup.setAttribute("id",`${newStudentValue[i].user_id}`);
+                inputGroup.setAttribute("id",`${newStudentValue[i].groups_id}`);
                 inputGroup.value = newStudentValue[i].groupname;
                 relativeDiv.prepend(newGroup);
                 newGroup.append(inputGroup)
@@ -186,16 +221,22 @@ function renderTable( newStudentValue) {
     newStudent.innerHTML += "<div class='row ' id='row'>" + divRow + controlUpdateDelete + "</div>";
     result.append(newStudent);
 }
+var eventGroupId;
 
 function getStudents(e) {
-
-    if (e.target.tagName !== "input" && e.target.id == "insertGroup") return;
-
+    if(!e.target.classList.contains("active")){
+        eventGroupId = e.target.getAttribute("id");
+        console.log(eventGroupId)
+    }
+    if (e.target.tagName !== "INPUT" || e.target.id == "insertGroup" ) {
+        return false
+    } else {
+        console.log(e.target)
         var data = {
             name: e.target.getAttribute("id")
         };
         var xhr = new XMLHttpRequest();
-        e.target.style.backgroundColor = "purple";
+        e.target.classList.toggle("active");
         e.target.style.color = "white";
         xhr.open("POST", `${localhostServ}/groupStudent`);
         xhr.setRequestHeader("Content-type", "application/json");
@@ -214,11 +255,12 @@ function getStudents(e) {
         };
         var row = document.getElementById("row");
 
-        if(row === null) {
+        if (row === null) {
             return false;
-        }   else {
+        } else {
             row.parentNode.innerHTML = null;
         }
+    }
 
 }
 

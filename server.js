@@ -40,11 +40,9 @@ app.post("/authorization", function (req, res) {
         login: req.body.login,
         password: req.body.password,
     };
-
+    var baseLogin;
+    var basePassword;
     client.query(`SELECT * FROM teachers WHERE login = '${user.login}';`, [], function (err, result) {
-
-        var baseLogin;
-        var basePassword;
         for (var key in result.rows) {
 
             baseLogin = result.rows[key].login;
@@ -53,8 +51,8 @@ app.post("/authorization", function (req, res) {
 
         }
         if (baseLogin === `${user.login}` && basePassword === `${user.password}`) {
-            authorizated = req.body.login;
-            res.status(200).send();
+
+            res.json(result.rows)
         } else {
             authorizated = "";
             res.status(401).send('Unauthorized ');
@@ -91,7 +89,7 @@ app.post("/registration", function (req, res) {
 
 app.post("/groupStudent", helpGroupApp.getGroupOfStudents);
 
-app.get("/getAllGroups", helpGroupApp.getAllGroups);
+app.post("/getAllGroups", helpGroupApp.getAllGroups);
 
 app.get("/accountSetting", function (req, res) {
 
@@ -106,7 +104,7 @@ app.post("/groups", function (req, res) {
 
     var groupId;
     var newGroup = `INSERT INTO groups(groupname, teacher_id) VALUES 
-    ('${req.body.groupName}', ${teacherId})`;
+    ('${req.body.groupName}', ${req.body.teachers_id})`;
     client.query(newGroup, [],
         function (err, result) {
             if (err) {
@@ -115,37 +113,33 @@ app.post("/groups", function (req, res) {
             console.log(result.rows);
 
         });
-    client.query(`SELECT * FROM groups WHERE teacher_id = '${teacherId}';`, [], function (err, result) {
-        console.log(result.rows);
-        for (var key in result.rows) {
-            groupId = result.rows[key].user_id;
-        }})
-        res.send(groupId)
+    client.query(`SELECT * FROM groups WHERE groupname = '${req.body.groupName}';`, [], function (err, result) {
+
+        res.json(result.rows[0].groups_id);
     });
+});
 
 
 
 app.post("/", async function (req, res) {
 
-    var groupid;
+
     var user = {
         username: req.body.username,
         age: req.body.age,
         lastname: req.body.lastname,
         city: req.body.city,
-        group: req.body.group
+        groups_id: req.body.groups_id
     };
-    const {rows} = await client.query(`SELECT * FROM groups WHERE groupname = '${user.group}';`, []);
-     groupid = rows[0].user_id;
 
-        var newUser = `INSERT INTO students( firstname, lastname, age, city, group_name, groups_id) VALUES
-    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', '${user.city}', ${groupid})`;
+        var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES
+    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${user.groups_id})`;
         client.query(newUser, [],
             function (err, result) {
                 if (err) {
-                    console.log(err);
+                    res.status(400).send("error")
                 }
-                console.log(result);
+                res.status(200).send("ok")
             })
 
 });
@@ -199,6 +193,15 @@ app.post("/update", function (req, res) {
             }
             console.log(result);
         });
+    client.query(`SELECT * FROM students WHERE user_id = ${userID.id}`, function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            res.send(result.rows)
+        });
+
+
+
 });
 
 app.post("/delete", function (req, res) {
@@ -206,9 +209,10 @@ app.post("/delete", function (req, res) {
     var id = req.body.id;
     client.query(`DELETE FROM students WHERE user_id = ${id}`, [], function (err, result) {
         if (err) {
-            console.log(err)
+            res.status(401).send("error")
+        }else {
+            res.status(200).send("ok")
         }
-        console.log(result);
     });
 });
 
