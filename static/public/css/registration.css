@@ -1,0 +1,59 @@
+.button {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(255, 255, 255);
+  background: #4caf50;
+}
+.wrapper {
+  width: 33%;
+  position: relative;
+  margin: 0 auto;
+}
+.registration-form {
+  display: flex;
+  flex-direction: column;
+}
+.registration-form__item {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0 2px 0;
+  font-size: 20px;
+}
+.registration-form__item:last-child {
+  display: inline-block;
+  text-align: right;
+}
+.registration-form input {
+  padding: 5px;
+  background: rgba(241, 241, 241, 0);
+}
+.registration-form input::-webkit-input-placeholder {
+  color: #635555;
+}
+.registration-form button {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(255, 255, 255);
+  background: #4caf50;
+}
+h1 {
+  text-align: center;
+}
+.close {
+  position: absolute;
+  right: 0;
+}
+.close button {
+  padding: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 20px;
+  color: rgba(255, 255, 255);
+  background: #4caf50;
+  font-size: 14px;
+}
+/*# sourceMappingURL=registration.css.map */
