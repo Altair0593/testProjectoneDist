@@ -1,6 +1,7 @@
 import { getSettings, changeLanguage, languageBox } from './indexLanguage.js';
 import {renderGroup, inputEnebled, postRequestGroup, localhostServ} from "./helpers/groupCallbacks";
 import * as utils from "../src/helpers/utils";
+import {checkOnlyNumbers, checkValueLength} from "./helpers/scriptValidation";
 import "../public/css/index.less"
 
 var createButton = document.getElementById("Create");
@@ -9,6 +10,15 @@ var myAccountBtn= document.getElementById("myAccount");
 var exitCabinet = document.getElementById('exitCabinet');
 var groupWrapper = document.querySelector(".group-wrapper");
 var selectElementLanguage = document.getElementById("selectElementLanguage");
+
+var nameStudent = document.getElementById("Name");
+var lastName = document.getElementById("Lastname");
+var city = document.getElementById("City");
+var ageInput = document.getElementById("Age");
+ageInput.oninput = checkOnlyNumbers;
+nameStudent.oninput = function () {checkValueLength(this, 16)};
+lastName.oninput = function () {checkValueLength(this, 16)};
+city.oninput = function () {checkValueLength(this, 16)};
 
 var wrapGroup = document.getElementById("wrap-group");
 wrapGroup.addEventListener("dblclick", inputEnebled);
@@ -41,14 +51,11 @@ ok.addEventListener("click", updateInfo);
 var cancel = document.createElement("button");
 cancel.innerText = "cancel";
 cancel.classList.add("btn");
-cancel.addEventListener("click", function () {
-    document.location.reload()
-});
+
 main();
 function main(){
     changeLanguage();
 }
-
 
 function toggleBilling(arg) {
     for (var i = 0; i < arg.length; i++) {
@@ -56,7 +63,29 @@ function toggleBilling(arg) {
     }
 }
 
+table.addEventListener("click", function (e) {
+    if (e.target.tagName !== 'BUTTON') return;
 
+    if(e.target.innerText === "cancel") {
+      var allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
+      var childCount = 0;
+      var buttonCount = 0;
+      for (var element of allInputs) {
+        element.disabled = true;
+        if (childCount === 4) {
+            for (var el of element.children) {
+                if (buttonCount < 2) {
+                    el.style.display = "inline-block";
+                    buttonCount++
+                }else {
+                    el.style.display = "none";
+                }
+            }
+        }
+        childCount++;
+      }
+    }
+});
 
 table.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
@@ -70,24 +99,27 @@ table.addEventListener("click", function (e) {
         var upd = document.getElementById(e.target.getAttribute("id"));
         var del = document.getElementById(`${id}del`);
         allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
-        console.log(allInputs);
+        del.style.display = "inline-block";
+        upd.style.display = "inline-block";
 
-        if (allInputs.disable === true) {
-            del.style.display = "inline-block";
-            upd.style.display = "inline-block";
-            return;
-        }else {
-            e.target.parentNode.append(ok);
-            e.target.parentNode.append(cancel);
-            toggleBilling(allInputs);
-             del.outerHTML= null;
-             upd.outerHTML = null;
+        for (var element of allInputs) {
+            for (var el of element.children) {
+                if(el.textContent === "ok" || el.textContent === "cancel") {
+                    el.style.display = "inline-block";
+                }else {
+                    e.target.parentNode.append(ok);
+                    e.target.parentNode.append(cancel);
+                }
+            }
         }
+        toggleBilling(allInputs);
+        del.style.display = "none";
+        upd.style.display = "none";
+
     } else if(e.target.innerText === "Delete") {
         deleteRow(e.target);
     }
 });
-
 
 function updateInfo(e) {
     var arrValues = [];
@@ -114,18 +146,16 @@ function updateInfo(e) {
         if (xhr.status == 401) {
             alert("insert correct login or password")
         } else {
-
             allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
-
-                    var studid= localStorage.getItem("student_id");
-                    toggleBilling(allInputs);
-                    e.target.parentNode.style.display = "none";
-                    var update = document.createElement("button")
+            var studid= localStorage.getItem("student_id");
+            toggleBilling(allInputs);
+            e.target.parentNode.style.display = "none";
+            var update = document.createElement("button")
             update.innerText = "Update";
             update.classList.add("btn");
             update.setAttribute("id",`${studid}upd`)
 
-                    var deletebut = document.createElement("button")
+            var deletebut = document.createElement("button")
             deletebut.innerText = "Delete";
             deletebut.classList.add("btn");
             deletebut.setAttribute("id",`${studid}del`)
@@ -135,41 +165,36 @@ function updateInfo(e) {
             div.append(update);
                     div.append(deletebut)
             e.target.parentNode.parentNode.append(div)
-
-
         }
     };
-
-
 }
 
 function createStudent() {
     var data = createObj();
-
     if(!data)return;
 
     xhr.open("POST", `${localhostServ}`);
-
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
-    xhr.onload = function(){
-       // if(xhr.status === 200){
-            console.log(JSON.parse(this.response)[0].user_id)
-        var userData = {
-            username:  document.getElementById("Name").value,
-            age: document.getElementById("Age").value,
-            lastname:document.getElementById("Lastname").value,
-            city:document.getElementById("City").value,
-            groups_id:eventGroupId,
-            user_id:JSON.parse(this.response)[0].user_id
-        };
-            renderTable(userData)
-       // }
-    }
+    xhr.onreadystatechange = function(){
+        if(xhr.status === 200 && xhr.readyState === 4){
+
+            var userData = {
+                username:  document.getElementById("Name").value,
+                age: document.getElementById("Age").value,
+                lastname:document.getElementById("Lastname").value,
+                city:document.getElementById("City").value,
+                groups_id:eventGroupId,
+                user_id:JSON.parse(this.response)[0].user_id
+            };
+            var divRow = createRow(userData);
+
+            table.insertAdjacentHTML("beforeend",divRow);
+        }
+    };
     xhr.onerror = function(){
         alert("server error");
     };
-
 }
 
 function createObj(id) {
@@ -263,8 +288,6 @@ function redrawTable(data) {
     table.innerHTML = "";
     for (var student of data) {
         var divRow = createRow(student);
-        var XZ = document.createElement("div");
-        XZ.innerHTML = divRow;
-        table.append(XZ);
+        table.insertAdjacentHTML('beforeend' ,divRow);
     }
 }

@@ -7,7 +7,7 @@ var massage = document.getElementById("message");
 var selectElementLanguage=document.getElementById("selectElementLanguage");
 selectElementLanguage.onchange = changeLanguage;
 loginAvt.onkeydown = function (e) {
-    if(!e.key.match(/[0-9A-Z]/gi)){
+    if(!e.key.match(/[0-9\/A-Z]/i)){
         return false
     }
 };

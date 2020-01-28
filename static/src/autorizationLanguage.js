@@ -25,7 +25,6 @@ let languageBox={
         }
     }
 };
-export {getSettings, changeLanguage, languageBox};
 function getSettings() {
     let selectElementLanguage = document.getElementById("selectElementLanguage");
     selectElementLanguage.addEventListener("click", changeLanguage);
@@ -44,4 +43,6 @@ function changePlaceHolder(obj) {
     for (const key in obj) {
         document.getElementById(key).placeholder = obj[key];
     }
-};
+}
+
+export {getSettings, changeLanguage, languageBox};

@@ -1,4 +1,26 @@
-import { getSettings, changeLanguage, languageBox } from './autorizationLanguage.js'
+import { getSettings, changeLanguage, languageBox } from './accountSettingsLanguage';
+import {checkValueLength} from "./helpers/scriptValidation";
+
+var login = document.getElementById("login");
+login.oninput = function () {
+    checkValueLength(this, 14);
+} ;
+var password = document.getElementById("password1");
+password.oninput = function () {
+    checkValueLength(this, 25);
+} ;
+var password2 = document.getElementById("password2");
+password2.oninput = function () {
+    checkValueLength(this, 25);
+} ;
+var email = document.getElementById("email");
+email.oninput = function () {
+    checkValueLength(this, 25);
+} ;
+var phone = document.getElementById("phone");
+phone.oninput = function () {
+    checkValueLength(this, 13);
+} ;
 
 let aboutMyself = document.getElementById("aboutMyself");
 aboutMyself.addEventListener('keydown', checkCurrentLengthText);
@@ -13,6 +35,14 @@ SaveBtn.addEventListener("click", getValidation);
 
 let closeBtn = document.getElementById("close");
 closeBtn.addEventListener('click',() => {document.location.href = 'http://localhost:7800/index.html'});
+
+var selectElementLanguage=document.getElementById("selectElementLanguage");
+selectElementLanguage.onchange = changeLanguage;
+
+main();
+function main(){
+    changeLanguage();
+}
 
 function getUserData() {
     let xhr = new XMLHttpRequest();
@@ -37,18 +67,29 @@ function fillInput() {
 
 let err = "";
 let User = function () {
-    this.login = document.getElementById("login").value.replace(/\s/g, '');
-    this.password = document.getElementById("password1").value;
-    this.password2 = document.getElementById("password2").value;
-    this.email = document.getElementById("email").value;
-    this.phone = document.getElementById("phone").value.replace(/[+()-/\s]/g, '');
-    this.aboutMyself = document.getElementById("aboutMyself").value;
-    this.teachers_id = teacher[0].teachers_id;
+    // this.document.getElementById("login").value.replace(/\s/g, '');
+    // this.password.value;
+    // this.password2.value;
+    // this.email.value;
+    // this.phone.value.replace(/[+()-/\s]/g, '');
+    // this.aboutMyself = document.getElementById("aboutMyself").value;
+    // this.teachers_id = teacher[0].teachers_id;
     // this.icon =  document.getElementById("icon").value;
 };
 
 function getValidation() {
-    let elementValue = new User();
+    // let elementValue = new User();
+    let elementValue = {
+        login: login.value.replace(/\s/g, ''),
+    password:password.value,
+        password2:   password2.value,
+        email:   email.value,
+        phone:  phone.value.replace(/[+()-/\s]/g, ''),
+        aboutMyself:  aboutMyself = document.getElementById("aboutMyself").value,
+        teachers_id: teacher[0].teachers_id,
+        // this.icon =  document.getElementById("icon").value;
+    };
+    console.log(elementValue)
     let message = document.getElementById("message");
     if (checkEmail(elementValue.email) && checklogin(elementValue.login) && checkPass(elementValue.password, elementValue.password2) && checkPhone(elementValue.phone, "380")) {
         let xhr = new XMLHttpRequest();
