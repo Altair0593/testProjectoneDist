@@ -12,7 +12,7 @@ const client = new Client({
     user: 'postgres',
     host: 'localhost',
     database: 'postgres',
-    password: 'postgres',
+    password: '7485184A',
     port: 5432,
 });
 
@@ -66,7 +66,8 @@ app.post("/registration", function (req, res) {
         login: req.body.login,
         password: req.body.password,
         email: req.body.email,
-        phone: req.body.phone
+        phone: req.body.phone,
+        keyword: req.body.keyword
     };
     client.query(`SELECT * FROM teachers WHERE login = '${user.login}';`, [], function (err, result) {
         console.log(result.rows, `${user.login}`);
@@ -76,7 +77,7 @@ app.post("/registration", function (req, res) {
             baselogin = result.rows[key].login;
         }
         if (baselogin !== `${user.login}`) {
-            var newUser = `INSERT INTO teachers(login, password, email, phone_number) VALUES ('${user.login}', '${user.password}', '${user.email}', '${user.phone}')`;
+            var newUser = `INSERT INTO teachers(login, password, email, phone_number,keyword) VALUES ('${user.login}', '${user.password}', '${user.email}', '${user.phone}','${user.keyword}')`;
             client.query(newUser, []);
         } else {
             res.status(400).send('Bad Request ');
