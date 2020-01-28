@@ -133,13 +133,16 @@ app.post("/", async function (req, res) {
     };
 
         var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES
-    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${user.groups_id})`;
+    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${user.groups_id}) RETURNING user_id` ;
         client.query(newUser, [],
             function (err, result) {
+            console.log(result.rows)
                 if (err) {
+
                     res.status(400).send("error")
                 }
-                res.status(200).send("ok")
+                res.json(result.rows)
+               // res.status(200).send("ok")
             })
 
 });
@@ -189,16 +192,13 @@ app.post("/update", function (req, res) {
         upgradeSQL,
         function (err, result) {
             if (err) {
-                console.log(err);
+                res.status(401).send("error")
+            }else {
+                res.status(200).send("ok")
             }
-            console.log(result);
+
         });
-    client.query(`SELECT * FROM students WHERE user_id = ${userID.id}`, function (err, result) {
-            if (err) {
-                console.log(err);
-            }
-            res.send(result.rows)
-        });
+
 
 
 
