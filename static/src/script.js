@@ -16,9 +16,15 @@ var lastName = document.getElementById("Lastname");
 var city = document.getElementById("City");
 var ageInput = document.getElementById("Age");
 ageInput.oninput = checkOnlyNumbers;
-nameStudent.oninput = function () {checkValueLength(this, 16)};
-lastName.oninput = function () {checkValueLength(this, 16)};
-city.oninput = function () {checkValueLength(this, 16)};
+nameStudent.oninput = function () {
+    checkValueLength(this, 16)
+};
+lastName.oninput = function () {
+    checkValueLength(this, 16)
+};
+city.oninput = function () {
+    checkValueLength(this, 16)
+};
 
 var wrapGroup = document.getElementById("wrap-group");
 wrapGroup.addEventListener("dblclick", inputEnebled);
@@ -67,24 +73,24 @@ function toggleBilling(arg) {
 table.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
 
-    if(e.target.innerText === "cancel") {
-      var allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
-      var childCount = 0;
-      var buttonCount = 0;
-      for (var element of allInputs) {
-        element.disabled = true;
-        if (childCount === 4) {
-            for (var el of element.children) {
-                if (buttonCount < 2) {
-                    el.style.display = "inline-block";
-                    buttonCount++
-                }else {
-                    el.style.display = "none";
+    if (e.target.innerText === "cancel") {
+        var allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
+        var childCount = 0;
+        var buttonCount = 0;
+        for (var element of allInputs) {
+            element.disabled = true;
+            if (childCount === 4) {
+                for (var el of element.children) {
+                    if (buttonCount < 2) {
+                        el.style.display = "inline-block";
+                        buttonCount++
+                    } else {
+                        el.style.display = "none";
+                    }
                 }
             }
+            childCount++;
         }
-        childCount++;
-      }
     }
 });
 table.addEventListener("click", function (e) {
@@ -104,13 +110,13 @@ table.addEventListener("click", function (e) {
 
         for (var element of allInputs) {
             for (var el of element.children) {
-                if(el.textContent === "ok" || el.textContent === "cancel") {
+                if (el.textContent === "ok" || el.textContent === "cancel") {
                     el.style.display = "inline-block";
-        }else {
+                } else {
                     e.target.parentNode.append(ok);
                     e.target.parentNode.append(cancel);
-             del.outerHTML= null;
-             upd.outerHTML = null;
+                    del.outerHTML = null;
+                    upd.outerHTML = null;
                 }
             }
         }
@@ -149,7 +155,7 @@ function updateInfo(e) {
             alert("insert correct login or password")
         } else {
             allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
-                    var studid= localStorage.getItem("student_id");
+            var studid = localStorage.getItem("student_id");
             toggleBilling(allInputs);
             e.target.parentNode.style.display = "none";
             var update = document.createElement("button")
@@ -178,20 +184,20 @@ function createStudent() {
     xhr.open("POST", `${localhostServ}`);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
-    xhr.onreadystatechange = function(){
-        if(xhr.status === 200 && xhr.readyState === 4){
+    xhr.onreadystatechange = function () {
+        if (xhr.status === 200 && xhr.readyState === 4) {
 
             var userData = {
-            username:  document.getElementById("Name").value,
+                username: document.getElementById("Name").value,
+                lastname: document.getElementById("Lastname").value,
                 age: document.getElementById("Age").value,
-            lastname: document.getElementById("Lastname").value,
-            city: document.getElementById("City").value,
-            groups_id: eventGroupId,
-            user_id: JSON.parse(this.response)[0].user_id
+                city: document.getElementById("City").value,
+                groups_id: eventGroupId,
+                user_id: JSON.parse(this.response)[0].user_id
             };
             var divRow = createRow(userData);
 
-            table.insertAdjacentHTML("beforeend",divRow);
+            table.insertAdjacentHTML("beforeend", divRow);
         }
     };
     xhr.onerror = function () {
@@ -291,6 +297,6 @@ function redrawTable(data) {
     table.innerHTML = "";
     for (var student of data) {
         var divRow = createRow(student);
-        table.insertAdjacentHTML('beforeend' ,divRow);
+        table.insertAdjacentHTML('beforeend', divRow);
     }
 }
