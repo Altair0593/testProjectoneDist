@@ -73,7 +73,7 @@ function toggleBilling(arg) {
 table.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
 
-    if (e.target.innerText === "cancel") {
+    if(e.target.innerText === "cancel") {
         var allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
         var childCount = 0;
         var buttonCount = 0;
@@ -84,7 +84,7 @@ table.addEventListener("click", function (e) {
                     if (buttonCount < 2) {
                         el.style.display = "inline-block";
                         buttonCount++
-                    } else {
+                    }else {
                         el.style.display = "none";
                     }
                 }
@@ -93,6 +93,7 @@ table.addEventListener("click", function (e) {
         }
     }
 });
+
 table.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
     var rows = document.getElementsByClassName("row");
@@ -101,7 +102,7 @@ table.addEventListener("click", function (e) {
 
     var str = "";
 
-    if (e.target.innerText === "Update") {
+    if(e.target.innerText === "Update"){
         var upd = document.getElementById(e.target.getAttribute("id"));
         var del = document.getElementById(`${id}del`);
         allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
@@ -110,13 +111,11 @@ table.addEventListener("click", function (e) {
 
         for (var element of allInputs) {
             for (var el of element.children) {
-                if (el.textContent === "ok" || el.textContent === "cancel") {
+                if(el.textContent === "ok" || el.textContent === "cancel") {
                     el.style.display = "inline-block";
-                } else {
+                }else {
                     e.target.parentNode.append(ok);
                     e.target.parentNode.append(cancel);
-                    del.outerHTML = null;
-                    upd.outerHTML = null;
                 }
             }
         }
@@ -124,7 +123,7 @@ table.addEventListener("click", function (e) {
         del.style.display = "none";
         upd.style.display = "none";
 
-    } else if (e.target.innerText === "Delete") {
+    } else if(e.target.innerText === "Delete") {
         deleteRow(e.target);
     }
 });

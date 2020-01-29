@@ -14,7 +14,7 @@ let languageBox={
     },
     ru:{ text: {
             myAccount: "Мой аккаунт",
-            iconTitle: "Изминить свой аватар",
+            iconTitle: "Изменить свой аватар",
             loginTitle: "Новый логин",
             password1Title: "Новый парол",
             password2Title: "Проверка пароля",
