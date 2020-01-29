@@ -156,27 +156,28 @@ function updateInfo(e) {
             allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
             var studid = localStorage.getItem("student_id");
             toggleBilling(allInputs);
-            e.target.parentNode.style.display = "none";
-            var update = document.createElement("button")
-            update.innerText = "Update";
-            update.classList.add("btn");
-            update.setAttribute("id", `${studid}upd`)
-
-            var deletebut = document.createElement("button")
-            deletebut.innerText = "Delete";
-            deletebut.classList.add("btn");
-            deletebut.setAttribute("id", `${studid}del`)
-
-            var div = document.createElement("div");
-            div.classList.add("row_childs")
-            div.append(update);
-            div.append(deletebut)
-            e.target.parentNode.parentNode.append(div)
+            var childCount = 0;
+            var buttonCount = 0;
+            // console.log(allInputs[4])
+            for (var element of allInputs) {
+                if (childCount === 4) {
+                    for (var el of element.children) {
+                        if (buttonCount < 2) {
+                            el.style.display = "inline-block";
+                            buttonCount++
+                        }else {
+                            el.style.display = "none";
+                        }
+                    }
+                }
+                childCount++;
+            }
         }
     };
+    e.stopPropagation();
 }
 
-function createStudent() {
+function createStudent(e) {
     var data = createObj();
     if (!data) return;
 
@@ -202,6 +203,7 @@ function createStudent() {
     xhr.onerror = function () {
         alert("server error");
     };
+    e.stopPropagation();
 }
 
 function createObj(id) {

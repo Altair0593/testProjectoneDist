@@ -1,12 +1,32 @@
 .button {
-  padding: 10px;
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  font-size: 15px;
+  transition-duration: 0.4s;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 20px;
-  color: rgba(255, 255, 255);
-  background: #4caf50;
+  outline: none;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.button:hover {
+  background-color: #4CAF50;
+  color: #fff;
+}
+* {
+  margin: 0;
+  padding: 0;
 }
 .wrapper {
+  background: radial-gradient(circle, #cbd250, #61c977, #00b6a5, #009bbf, #247bb5);
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Alata', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+.content-box {
   width: 33%;
   position: relative;
   margin: 0 auto;
@@ -26,19 +46,36 @@
   text-align: right;
 }
 .registration-form input {
-  padding: 5px;
-  background: rgba(241, 241, 241, 0);
+  padding: 7px;
+  border: none;
+  opacity: 0.7;
+  outline: none;
+  border-bottom: 2px solid #3399ff;
+  transition-duration: 0.8s;
+}
+.registration-form input:focus {
+  background-color: #4CAF50;
+  color: white;
+  border-bottom: 2px solid #9900cc;
 }
 .registration-form input::-webkit-input-placeholder {
   color: #635555;
 }
 .registration-form button {
-  padding: 10px;
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  font-size: 15px;
+  transition-duration: 0.4s;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 20px;
-  color: rgba(255, 255, 255);
-  background: #4caf50;
+  outline: none;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.registration-form button:hover {
+  background-color: #4CAF50;
+  color: #fff;
 }
 h1 {
   text-align: center;
@@ -48,12 +85,20 @@ h1 {
   right: 0;
 }
 .close button {
-  padding: 10px;
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  font-size: 15px;
+  transition-duration: 0.4s;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 20px;
-  color: rgba(255, 255, 255);
-  background: #4caf50;
+  outline: none;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   font-size: 14px;
+}
+.close button:hover {
+  background-color: #4CAF50;
+  color: #fff;
 }
 /*# sourceMappingURL=registration.css.map */
