@@ -6,8 +6,7 @@ var path = require("path");
 var bodyParser = require("body-parser");
 
 
-
-const { Client } = require('pg');
+const {Client} = require('pg');
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
@@ -23,12 +22,11 @@ client.connect(function (err) {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
-
 
 
 var authorizated;
@@ -121,7 +119,6 @@ app.post("/groups", function (req, res) {
 });
 
 
-
 app.post("/", async function (req, res) {
 
 
@@ -133,21 +130,20 @@ app.post("/", async function (req, res) {
         groups_id: req.body.groups_id
     };
 
-        var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES
-    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${user.groups_id}) RETURNING user_id` ;
-        client.query(newUser, [],
-            function (err, result) {
+    var newUser = `INSERT INTO students( firstname, lastname, age, city, groups_id) VALUES
+    ('${user.username}', '${user.lastname}', '${user.age}', '${user.city}', ${user.groups_id}) RETURNING user_id`;
+    client.query(newUser, [],
+        function (err, result) {
             console.log(result.rows)
-                if (err) {
+            if (err) {
 
-                    res.status(400).send("error")
-                }
-                res.json(result.rows)
-               // res.status(200).send("ok")
-            })
+                res.status(400).send("error")
+            }
+            res.json(result.rows)
+            // res.status(200).send("ok")
+        })
 
 });
-
 
 
 app.post("/update", function (req, res) {
@@ -194,13 +190,11 @@ app.post("/update", function (req, res) {
         function (err, result) {
             if (err) {
                 res.status(401).send("error")
-            }else {
+            } else {
                 res.status(200).send("ok")
             }
 
         });
-
-
 
 
 });
@@ -211,7 +205,7 @@ app.post("/delete", function (req, res) {
     client.query(`DELETE FROM students WHERE user_id = ${id}`, [], function (err, result) {
         if (err) {
             res.status(401).send("error")
-        }else {
+        } else {
             res.status(200).send("ok")
         }
     });
@@ -232,7 +226,7 @@ app.post("/accountupdate", function (req, res) {
         "email",
         "phone_number",
         "about_myself",
-         // "teacher_icon"
+        // "teacher_icon"
     ];
 
     var queryComand = "";
@@ -263,16 +257,16 @@ app.post("/accountupdate", function (req, res) {
     }, user);
 
     queryComand = queryComand.substring(0, queryComand.length - 1);
-    console.log(teacherId.id , upgradeSQL, queryComand);
+    console.log(teacherId.id, upgradeSQL, queryComand);
 
     client.query(`UPDATE teachers SET ${queryComand} WHERE teachers_id = ${teacherId.id}`,
-         upgradeSQL,
-         function (err, result) {
-             if (err) {
-                 console.log(err);
-             }
-             console.log(result);
-         });
+        upgradeSQL,
+        function (err, result) {
+            if (err) {
+                console.log(err);
+            }
+            console.log(result);
+        });
 });
 
 // const webpack = require('webpack');
