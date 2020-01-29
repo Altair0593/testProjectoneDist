@@ -6,9 +6,11 @@ let User = function () {
     this.password = document.getElementById("password1").value;
     this.password2 = document.getElementById("password2").value;
     this.email = document.getElementById("email").value;
-    this.phone = document.getElementById("phone").value.replace(/[+()-\s]/g, '');
-}
+    this.phone = document.getElementById("phone").value.replace(/[+()-/\s]/g, '');
+    this.keyword = document.getElementById("keyword").value;
 
+}
+console.log(document.getElementById("keyword").value);
 function getValidation() {
     let elementValue = new User();
     let message = document.getElementById("message");
@@ -66,5 +68,8 @@ function checkEmail(email) {
     err = "Некорректный e-mail"
     return false;
 }
+let closeBtn = document.getElementById("close");
+closeBtn.addEventListener('click',() => {document.location.href = 'http://localhost:7800/authorization.html'});
+
 
 import "../public/css/registration.less"

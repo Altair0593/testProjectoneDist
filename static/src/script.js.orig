@@ -67,6 +67,7 @@ function toggleBilling(arg) {
 table.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
 
+<<<<<<< HEAD
     if(e.target.innerText === "cancel") {
       var allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
       var childCount = 0;
@@ -87,6 +88,9 @@ table.addEventListener("click", function (e) {
       }
     }
 });
+
+=======
+>>>>>>> refactor-logic-for-groups
 table.addEventListener("click", function (e) {
     if (e.target.tagName !== 'BUTTON') return;
     var rows = document.getElementsByClassName("row");
@@ -99,6 +103,7 @@ table.addEventListener("click", function (e) {
         var upd = document.getElementById(e.target.getAttribute("id"));
         var del = document.getElementById(`${id}del`);
         allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
+<<<<<<< HEAD
         del.style.display = "inline-block";
         upd.style.display = "inline-block";
 
@@ -106,11 +111,9 @@ table.addEventListener("click", function (e) {
             for (var el of element.children) {
                 if(el.textContent === "ok" || el.textContent === "cancel") {
                     el.style.display = "inline-block";
-        }else {
+                }else {
                     e.target.parentNode.append(ok);
                     e.target.parentNode.append(cancel);
-             del.outerHTML= null;
-             upd.outerHTML = null;
                 }
             }
         }
@@ -118,7 +121,23 @@ table.addEventListener("click", function (e) {
         del.style.display = "none";
         upd.style.display = "none";
 
+    } else if(e.target.innerText === "Delete") {
+=======
+        console.log(allInputs);
+
+        if (allInputs.disable === true) {
+            del.style.display = "inline-block";
+            upd.style.display = "inline-block";
+            return;
+        } else {
+            e.target.parentNode.append(ok);
+            e.target.parentNode.append(cancel);
+            toggleBilling(allInputs);
+            del.outerHTML = null;
+            upd.outerHTML = null;
+        }
     } else if (e.target.innerText === "Delete") {
+>>>>>>> refactor-logic-for-groups
         deleteRow(e.target);
     }
 });
@@ -149,7 +168,12 @@ function updateInfo(e) {
             alert("insert correct login or password")
         } else {
             allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
-                    var studid= localStorage.getItem("student_id");
+<<<<<<< HEAD
+            var studid= localStorage.getItem("student_id");
+=======
+
+            var studid = localStorage.getItem("student_id");
+>>>>>>> refactor-logic-for-groups
             toggleBilling(allInputs);
             e.target.parentNode.style.display = "none";
             var update = document.createElement("button")
@@ -173,28 +197,51 @@ function updateInfo(e) {
 
 function createStudent() {
     var data = createObj();
+<<<<<<< HEAD
+    if(!data)return;
+=======
+
     if (!data) return;
+>>>>>>> refactor-logic-for-groups
 
     xhr.open("POST", `${localhostServ}`);
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
+<<<<<<< HEAD
     xhr.onreadystatechange = function(){
         if(xhr.status === 200 && xhr.readyState === 4){
 
             var userData = {
-            username:  document.getElementById("Name").value,
+                username:  document.getElementById("Name").value,
                 age: document.getElementById("Age").value,
-            lastname: document.getElementById("Lastname").value,
-            city: document.getElementById("City").value,
-            groups_id: eventGroupId,
-            user_id: JSON.parse(this.response)[0].user_id
+                lastname:document.getElementById("Lastname").value,
+                city:document.getElementById("City").value,
+                groups_id:eventGroupId,
+                user_id:JSON.parse(this.response)[0].user_id
             };
             var divRow = createRow(userData);
 
             table.insertAdjacentHTML("beforeend",divRow);
         }
     };
+    xhr.onerror = function(){
+=======
+    xhr.onload = function () {
+        // if(xhr.status === 200){
+        console.log(JSON.parse(this.response)[0].user_id)
+        var userData = {
+            username: document.getElementById("Name").value,
+            age: document.getElementById("Age").value,
+            lastname: document.getElementById("Lastname").value,
+            city: document.getElementById("City").value,
+            groups_id: eventGroupId,
+            user_id: JSON.parse(this.response)[0].user_id
+        };
+        renderTable(userData)
+        // }
+    }
     xhr.onerror = function () {
+>>>>>>> refactor-logic-for-groups
         alert("server error");
     };
 }
