@@ -149,10 +149,10 @@ function updateInfo(e) {
 
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(JSON.stringify(data));
-    xhr.onload = function () {
+    xhr.onreadystatechange = function () {
         if (xhr.status == 401) {
             alert("insert correct login or password")
-        } else {
+        } else if (xhr.readyState === 4) {
             allInputs = e.target.parentNode.parentNode.querySelectorAll(".row_childs");
             var studid = localStorage.getItem("student_id");
             toggleBilling(allInputs);
